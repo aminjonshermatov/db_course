@@ -2,26 +2,26 @@ alter session set current_schema = AMINJON;
 
 CREATE TABLE Salespeople
 (
-    snum  INT,
-    sname VARCHAR(30),
-    city  VARCHAR(15),
-    comm  DECIMAL(3, 2)
+    snum  INT,          -- уникальный номер, назначенный каждому продавцу ("номер служащего")
+    sname VARCHAR(30),  -- имя продавца
+    city  VARCHAR(15),  -- расположение продавца (город)
+    comm  DECIMAL(3, 2) -- комиссионные продавцов в десятичной форме
 );
 
 CREATE TABLE Customers
 (
-    cnum   INT,
-    cname  VARCHAR(30),
-    city   VARCHAR(15),
-    rating INT,
-    snum   INT
+    cnum   INT,         -- Уникальный номер назначенный каждому заказчику
+    cname  VARCHAR(30), -- Имя заказчика
+    city   VARCHAR(15), -- Расположение заказчика (город)
+    rating INT,         -- Код, указывающий уровень предпочтения данного заказчика перед другими. Более высокий номер указывают на большее предпочтение (рейтинг).
+    snum   INT          -- Номер продавца, назначенного этому заказчику (из таблицы Продавцов)
 );
 
 CREATE TABLE Orders
 (
-    onum  INT,
-    odate DATE,
-    amt   DECIMAL(14, 2),
-    snum  INT,
-    cnum  INT
+    onum  INT,            -- уникальный номер данный каждому приобретению
+    odate DATE,           -- дата приобретения
+    amt   DECIMAL(14, 2), -- значение суммы приобретений
+    snum  INT,            -- номер продавца продающего приобретение (из таблицы Продавцов)
+    cnum  INT             -- номер заказчика делающего приобретение (из таблицы Заказчиков)
 );
