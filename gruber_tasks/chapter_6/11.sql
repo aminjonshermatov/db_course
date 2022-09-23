@@ -6,6 +6,6 @@ alter session set current_schema = AMINJON;
 --  один раз.)
 
 
-select O.ODATE, count(distinct (select C.CNUM from CUSTOMERS C where C.CNUM = O.CNUM))
+select O.ODATE, count(distinct (select S.SNUM from SALESPEOPLE S where S.SNUM = O.SNUM))
 from ORDERS O
 group by O.ODATE;
