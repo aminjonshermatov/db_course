@@ -8,4 +8,4 @@ alter session set current_schema = AMINJON;
 select o.SNUM, sum(o.AMT) as sum_
 from ORDERS o
 group by o.SNUM
-having sum(o.AMT) > max(o.AMT);
+having sum(o.AMT) > (select max(o2.AMT) from ORDERS o2);
