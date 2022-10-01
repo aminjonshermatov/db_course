@@ -5,7 +5,7 @@ alter session set current_schema = AMINJON;
 --    городов рейтингами.
 
 
-select c1.*
+select c1.CNAME as name, c1.CNUM as num
 from CUSTOMERS c1
 where (c1.CITY, c1.RATING) in (select c2.CITY, max(c2.RATING)
                                from CUSTOMERS c2

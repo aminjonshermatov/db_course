@@ -5,7 +5,7 @@ alter session set current_schema = AMINJON;
 --    обслуживают.
 
 
-select *
+select s.SNAME as name, s.SNUM as num
 from SALESPEOPLE s
 where exists (select *
               from CUSTOMERS c
