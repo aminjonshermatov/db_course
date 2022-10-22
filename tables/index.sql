@@ -16,12 +16,12 @@ drop sequence section_id_seq;
 drop sequence workshop_id_seq;
 drop sequence labor_cost_standards_id_seq;
 
-drop table details;
-drop table employees;
 drop table labor_cost_standards;
 drop table price_guide;
 drop table sections;
 drop table workshops;
+drop table details;
+drop table employees;
 drop table professions;
 
 create sequence details_id_seq start with 1;
@@ -52,7 +52,7 @@ create table employees (
     initials varchar(30) not null,
 
     constraint employee_id_pk primary key (employee_id),
-    constraint profession_id_fk foreign key (profession_id) references professions(profession_id)
+    constraint profession_id_fk foreign key (profession_id) references professions(profession_id) on delete cascade
 );
 
 -- цех
@@ -63,7 +63,7 @@ create table workshops (
     masters_id int not null,
 
     constraint workshop_id_pk primary key (workshop_id),
-    constraint masters_id_workshop_fk foreign key (masters_id) references employees(employee_id)
+    constraint masters_id_workshop_fk foreign key (masters_id) references employees(employee_id) on delete cascade
 );
 
 -- участки цеха
@@ -75,8 +75,8 @@ create table sections (
     masters_id int not null,
 
     constraint section_id_pk primary key (section_id),
-    constraint workshop_id_fk foreign key (workshop_id) references workshops(workshop_id),
-    constraint masters_id_section_fk foreign key (masters_id) references employees(employee_id)
+    constraint workshop_id_fk foreign key (workshop_id) references workshops(workshop_id) on delete cascade,
+    constraint masters_id_section_fk foreign key (masters_id) references employees(employee_id) on delete cascade
 );
 
 create sequence price_guide_seq start with 1;
@@ -99,7 +99,7 @@ create table labor_cost_standards (
     piece_time int not null check ( piece_time >= 0 ),
 
     constraint operation_id_pk primary key (operation_id),
-    constraint detail_id_fk foreign key (detail_id) references details(detail_id),
-    constraint profession_labor_id_fk foreign key (profession_id) references professions(profession_id),
-    constraint price_guide_id_fk foreign key (price_guide_id) references price_guide(price_guide_id)
+    constraint detail_id_fk foreign key (detail_id) references details(detail_id) on delete cascade,
+    constraint profession_labor_id_fk foreign key (profession_id) references professions(profession_id) on delete cascade,
+    constraint price_guide_id_fk foreign key (price_guide_id) references price_guide(price_guide_id) on delete cascade
 );
