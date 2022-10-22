@@ -55,6 +55,18 @@ create table employees (
     constraint profession_id_fk foreign key (profession_id) references professions(profession_id) on delete cascade
 );
 
+create or replace trigger on_delete__profession_delete_employee__cascade before delete on professions for
+each row
+begin
+    delete from employees where profession_id = :old.profession_id;
+end;
+
+create or replace trigger on_delete__profession_reset_employee__set_null before delete on professions for
+each row
+begin
+    update employees set profession_id = null where profession_id = :old.profession_id;
+end;
+
 -- цех
 create sequence workshop_id_seq start with 1;
 create table workshops (
@@ -65,6 +77,18 @@ create table workshops (
     constraint workshop_id_pk primary key (workshop_id),
     constraint masters_id_workshop_fk foreign key (masters_id) references employees(employee_id) on delete cascade
 );
+
+create or replace trigger on_delete__employee_delete_workshop_master__cascade before delete on employees for
+each row
+begin
+    delete from workshops where masters_id = :old.employee_id;
+end;
+
+create or replace trigger on_delete__employee_reset_workshop_master__set_null before delete on employees for
+each row
+begin
+    update workshops set masters_id = null where masters_id = :old.employee_id;
+end;
 
 -- участки цеха
 create sequence section_id_seq start with 1;
@@ -78,6 +102,30 @@ create table sections (
     constraint workshop_id_fk foreign key (workshop_id) references workshops(workshop_id) on delete cascade,
     constraint masters_id_section_fk foreign key (masters_id) references employees(employee_id) on delete cascade
 );
+
+create or replace trigger on_delete__workshop_delete_section__cascade before delete on workshops for
+each row
+begin
+    delete from sections where sections.workshop_id = :old.workshop_id;
+end;
+
+create or replace trigger on_delete__workshop_reset_section_workshop__set_null before delete on workshops for
+each row
+begin
+    update sections set workshop_id = null where workshop_id = :old.workshop_id;
+end;
+
+create or replace trigger on_delete__employee_delete_section__cascade before delete on employees for
+each row
+begin
+    delete from sections where sections.masters_id = :old.employee_id;
+end;
+
+create or replace trigger on_delete__employee_reset_section_master__set_null before delete on employees for
+each row
+begin
+    update sections set masters_id = null where masters_id = :old.employee_id;
+end;
 
 create sequence price_guide_seq start with 1;
 create table price_guide (
