@@ -9,19 +9,13 @@
 */
 
 drop sequence details_id_seq;
-drop sequence employee_id_seq;
 drop sequence price_guide_seq;
 drop sequence profession_id_seq;
-drop sequence section_id_seq;
-drop sequence workshop_id_seq;
 drop sequence labor_cost_standards_id_seq;
 
 drop table labor_cost_standards;
 drop table price_guide;
-drop table sections;
-drop table workshops;
 drop table details;
-drop table employees;
 drop table professions;
 
 create sequence details_id_seq start with 1;
@@ -29,7 +23,7 @@ create table details (
     detail_id int default details_id_seq.nextval,
     type varchar(9) not null check ( type in ('PURCHASED', 'IN_HOUSE') ),
     name varchar(100) not null,
-    measure_unit varchar(10) default 'pcs',
+    measure_unit varchar(10) default 'шт',
     price decimal(13, 2) not null check ( price > 0 ),
 
     constraint detail_id_pk primary key (detail_id)
@@ -43,93 +37,10 @@ create table professions (
     constraint profession_id_pk primary key (profession_id)
 );
 
-create sequence employee_id_seq start with 1;
-create table employees (
-    employee_id int default employee_id_seq.nextval,
-    profession_id int not null,
-    qualification int default (1) not null,
-    marital_status varchar(8) not null check ( marital_status in ('SINGLE', 'MARRIED', 'DIVORCED') ),
-    initials varchar(30) not null,
-
-    constraint employee_id_pk primary key (employee_id),
-    constraint profession_id_fk foreign key (profession_id) references professions(profession_id) on delete cascade
-);
-
-create or replace trigger on_delete__profession_delete_employee__cascade before delete on professions for
-each row
-begin
-    delete from employees where profession_id = :old.profession_id;
-end;
-
-create or replace trigger on_delete__profession_reset_employee__set_null before delete on professions for
-each row
-begin
-    update employees set profession_id = null where profession_id = :old.profession_id;
-end;
-
--- цех
-create sequence workshop_id_seq start with 1;
-create table workshops (
-    workshop_id int default workshop_id_seq.nextval,
-    name varchar(100) not null,
-    masters_id int not null,
-
-    constraint workshop_id_pk primary key (workshop_id),
-    constraint masters_id_workshop_fk foreign key (masters_id) references employees(employee_id) on delete cascade
-);
-
-create or replace trigger on_delete__employee_delete_workshop_master__cascade before delete on employees for
-each row
-begin
-    delete from workshops where masters_id = :old.employee_id;
-end;
-
-create or replace trigger on_delete__employee_reset_workshop_master__set_null before delete on employees for
-each row
-begin
-    update workshops set masters_id = null where masters_id = :old.employee_id;
-end;
-
--- участки цеха
-create sequence section_id_seq start with 1;
-create table sections (
-    workshop_id int not null,
-    section_id int default section_id_seq.nextval,
-    name varchar(100) not null,
-    masters_id int not null,
-
-    constraint section_id_pk primary key (section_id),
-    constraint workshop_id_fk foreign key (workshop_id) references workshops(workshop_id) on delete cascade,
-    constraint masters_id_section_fk foreign key (masters_id) references employees(employee_id) on delete cascade
-);
-
-create or replace trigger on_delete__workshop_delete_section__cascade before delete on workshops for
-each row
-begin
-    delete from sections where sections.workshop_id = :old.workshop_id;
-end;
-
-create or replace trigger on_delete__workshop_reset_section_workshop__set_null before delete on workshops for
-each row
-begin
-    update sections set workshop_id = null where workshop_id = :old.workshop_id;
-end;
-
-create or replace trigger on_delete__employee_delete_section__cascade before delete on employees for
-each row
-begin
-    delete from sections where sections.masters_id = :old.employee_id;
-end;
-
-create or replace trigger on_delete__employee_reset_section_master__set_null before delete on employees for
-each row
-begin
-    update sections set masters_id = null where masters_id = :old.employee_id;
-end;
 
 create sequence price_guide_seq start with 1;
 create table price_guide (
-    price_guide_id int default profession_id_seq.nextval,
+    price_guide_id int default price_guide_seq.nextval,
     hourly_rate int not null check ( hourly_rate > 0 ),
 
     constraint price_guide_id_pk primary key (price_guide_id)
@@ -151,3 +62,83 @@ create table labor_cost_standards (
     constraint profession_labor_id_fk foreign key (profession_id) references professions(profession_id) on delete cascade,
     constraint price_guide_id_fk foreign key (price_guide_id) references price_guide(price_guide_id) on delete cascade
 );
+
+create or replace procedure seed_data(n int) as
+    begin
+        insert into professions (name) values ('Дизайнер');
+        insert into professions (name) values ('Конструктор');
+        insert into professions (name) values ('Столяр');
+        insert into professions (name) values ('Маляр');
+        insert into professions (name) values ('Сборщик мебели');
+
+        insert into price_guide (hourly_rate) values (11);
+        insert into price_guide (hourly_rate) values (12);
+        insert into price_guide (hourly_rate) values (13);
+        insert into price_guide (hourly_rate) values (14);
+        insert into price_guide (hourly_rate) values (15);
+
+        insert into details ("TYPE", name, measure_unit, price) values ('PURCHASED', 'ЛДСП', 'м.кв', 40); -- 40$
+        insert into details ("TYPE", name, measure_unit, price) values ('PURCHASED', 'Кромка', 'м', 3); -- 3$
+        insert into details ("TYPE", name, measure_unit, price) values ('PURCHASED', 'Лак', 'л', 2);
+        insert into details ("TYPE", name, measure_unit, price) values ('PURCHASED', 'ДВП', 'м.кв.', 5);
+        insert into details ("TYPE", name, measure_unit, price) values ('IN_HOUSE', 'Матрас', 'м.кб.', 20);
+
+        select * from details;
+
+        insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
+            values (1, 2, 8, 2, 2, 2);
+        insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
+            values (2, 3, 5, 1, 1, 1);
+        insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
+            values (3, 4, 6, 3, 2, 2);
+        insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
+            values (4, 3, 5, 4, 3, 2);
+        insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
+            values (5, 5, 3, 5, 4, 4);
+
+    end;
+
+begin
+    seed_data(5);
+end;
+
+create or replace function most_expensive_detail return int is most_exp int;
+    begin
+        select price
+        into most_exp
+        from details;
+        return (most_exp);
+    end;
+
+create or replace package details as
+
+    TYPE measure_record IS RECORD( operation_id int, detail_id int);
+
+    TYPE measure_table IS TABLE OF measure_record;
+
+    FUNCTION get_operations_with_detail(detail_name varchar(100))
+        RETURN measure_table
+        PIPELINED;
+END;
+
+CREATE OR REPLACE PACKAGE BODY details AS
+
+    FUNCTION get_operations_with_detail(detail_name varchar(100))
+        RETURN measure_table
+        PIPELINED IS rec measure_record;
+
+    BEGIN
+        SELECT l.operation_id, d.detail_id
+          INTO rec
+          FROM labor_cost_standards l
+          right join details d on d.detail_id = l.detail_id and d.name = detail_name;
+
+        PIPE ROW (rec);
+
+        RETURN;
+    END get_operations_with_detail;
+END;
+
+begin
+    details.get_operations_with_detail('ЛДСП');
+end;
