@@ -134,7 +134,7 @@ create or replace package furniture_details as
     type measure_table is table of measure_record;
 
     function most_expensive_detail return int;
-    function get_operations_with_detail(detail_name varchar2) RETURN measure_table PIPELINED;
+    function get_operations_with_detail(detail_name varchar2) return measure_table pipelined;
 end furniture_details;
 /
 
