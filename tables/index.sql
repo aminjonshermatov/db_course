@@ -49,11 +49,11 @@ create table price_guide (
 -- нормы затрат труда
 create sequence labor_cost_standards_id_seq start with 1;
 create table labor_cost_standards (
-    detail_id int not null,
+    detail_id int,
     operation_id int default labor_cost_standards_id_seq.nextval,
-    profession_id int not null,
+    profession_id int,
     qualification int not null,
-    price_guide_id int not null,
+    price_guide_id int,
     preparatory_time int not null check ( preparatory_time >= 0 ),
     piece_time int not null check ( piece_time >= 0 ),
 
@@ -63,7 +63,29 @@ create table labor_cost_standards (
     constraint price_guide_id_fk foreign key (price_guide_id) references price_guide(price_guide_id) on delete cascade
 );
 
-create or replace procedure seed_data(n int) as
+create or replace trigger on_delete__detail_update__labor_cost__set_null before delete on details
+    for each row
+    begin
+        update labor_cost_standards set detail_id = null where detail_id = :old.detail_id;
+    end;
+/
+
+create or replace trigger on_delete__price_guide__labor_cost__set_null before delete on price_guide
+    for each row
+    begin
+        update labor_cost_standards set price_guide_id = null where price_guide_id = :old.price_guide_id;
+    end;
+/
+
+create or replace trigger on_delete__profession__labor_cost__set_null before delete on professions
+    for each row
+    begin
+        update labor_cost_standards set profession_id = null where profession_id = :old.profession_id;
+    end;
+/
+
+drop procedure seed_data;
+create or replace procedure seed_data as
     begin
         insert into professions (name) values ('Дизайнер');
         insert into professions (name) values ('Конструктор');
@@ -83,10 +105,10 @@ create or replace procedure seed_data(n int) as
         insert into details ("TYPE", name, measure_unit, price) values ('PURCHASED', 'ДВП', 'м.кв.', 5);
         insert into details ("TYPE", name, measure_unit, price) values ('IN_HOUSE', 'Матрас', 'м.кб.', 20);
 
-        select * from details;
-
         insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
             values (1, 2, 8, 2, 2, 2);
+        insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
+            values (1, 3, 4, 1, 3, 4);
         insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
             values (2, 3, 5, 1, 1, 1);
         insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
@@ -96,49 +118,53 @@ create or replace procedure seed_data(n int) as
         insert into labor_cost_standards(detail_id, profession_id, qualification, price_guide_id, preparatory_time, piece_time)
             values (5, 5, 3, 5, 4, 4);
 
-    end;
+    end seed_data;
+/
 
 begin
-    seed_data(5);
+    seed_data();
 end;
 
-create or replace function most_expensive_detail return int is most_exp int;
-    begin
-        select price
-        into most_exp
-        from details;
-        return (most_exp);
-    end;
+drop package body furniture_details;
+drop package furniture_details;
 
-create or replace package details as
+create or replace package furniture_details as
 
-    TYPE measure_record IS RECORD( operation_id int, detail_id int);
+    type measure_record is record(operation_id int, detail_id int, detail_name varchar(100), price decimal);
+    type measure_table is table of measure_record;
 
-    TYPE measure_table IS TABLE OF measure_record;
+    function most_expensive_detail return int;
+    function get_operations_with_detail(detail_name varchar2) RETURN measure_table PIPELINED;
+end furniture_details;
+/
 
-    FUNCTION get_operations_with_detail(detail_name varchar(100))
-        RETURN measure_table
-        PIPELINED;
-END;
+create or replace package body furniture_details as
 
-CREATE OR REPLACE PACKAGE BODY details AS
+    function most_expensive_detail return int is most_exp int;
+        begin
+            select max(price)
+            into most_exp
+            from details;
+            return most_exp;
+        end most_expensive_detail;
 
-    FUNCTION get_operations_with_detail(detail_name varchar(100))
-        RETURN measure_table
-        PIPELINED IS rec measure_record;
+    function get_operations_with_detail(detail_name varchar2) return measure_table pipelined is res measure_table;
+        begin
+            select l.operation_id, d.detail_id, d.name, d.price
+            bulk collect into res
+            from labor_cost_standards l
+            right join details d on d.detail_id = l.detail_id
+            where d.name = detail_name;
 
-    BEGIN
-        SELECT l.operation_id, d.detail_id
-          INTO rec
-          FROM labor_cost_standards l
-          right join details d on d.detail_id = l.detail_id and d.name = detail_name;
+            for i in 1..res.COUNT
+                loop
+                    pipe row ( res(i) );
+                end loop;
 
-        PIPE ROW (rec);
+            return;
+        end get_operations_with_detail;
+end furniture_details;
+/
 
-        RETURN;
-    END get_operations_with_detail;
-END;
-
-begin
-    details.get_operations_with_detail('ЛДСП');
-end;
+select furniture_details.most_expensive_detail() from dual;
+select * from table( furniture_details.get_operations_with_detail('ЛДСП') );
