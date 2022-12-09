@@ -30,6 +30,11 @@ public class LaborCostStandardsController {
         return laborCostStandardService.getLaborCostStandardsPropagate();
     }
 
+    @GetMapping("/propagate/view")
+    List<LaborCostStandardPropagate> getLaborCostStandardsPropagateView() {
+        return laborCostStandardService.getLaborCostStandardsPropagateView();
+    }
+
     @GetMapping("/{operationId}")
     LaborCostStandard getLaborCostStandardById(@PathVariable Integer operationId) {
         return laborCostStandardService.getLaborCostStandard(operationId);

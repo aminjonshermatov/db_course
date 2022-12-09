@@ -28,6 +28,11 @@ public class LaborCostStandardServiceImpl implements LaborCostStandardService {
     }
 
     @Override
+    public List<LaborCostStandardPropagate> getLaborCostStandardsPropagateView() {
+        return laborCostStandardsRepository.findAllPropagateView();
+    }
+
+    @Override
     public LaborCostStandard getLaborCostStandard(Integer operationId) {
         try {
             return laborCostStandardsRepository.findById(operationId);

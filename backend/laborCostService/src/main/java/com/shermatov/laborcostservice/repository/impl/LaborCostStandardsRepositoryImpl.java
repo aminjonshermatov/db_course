@@ -1,6 +1,5 @@
 package com.shermatov.laborcostservice.repository.impl;
 
-import com.shermatov.laborcostservice.model.Detail;
 import com.shermatov.laborcostservice.model.LaborCostStandard;
 import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.repository.LaborCostStandardsRepository;
@@ -29,6 +28,12 @@ public class LaborCostStandardsRepositoryImpl implements LaborCostStandardsRepos
                         "LEFT JOIN details d ON labor_cost_standards.detail_id = d.detail_id\n" +
                         "LEFT JOIN price_guide pg ON labor_cost_standards.price_guide_id = pg.price_guide_id\n" +
                         "LEFT JOIN professions p ON p.profession_id = labor_cost_standards.profession_id",
+                BeanPropertyRowMapper.newInstance(LaborCostStandardPropagate.class));
+    }
+
+    @Override
+    public List<LaborCostStandardPropagate> findAllPropagateView() {
+        return jdbcTemplate.query("SELECT * FROM labor_cost_all_details",
                 BeanPropertyRowMapper.newInstance(LaborCostStandardPropagate.class));
     }
 

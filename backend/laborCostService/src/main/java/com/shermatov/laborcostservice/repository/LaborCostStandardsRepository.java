@@ -9,6 +9,7 @@ public interface LaborCostStandardsRepository {
 
     List<LaborCostStandard> findAll();
     List<LaborCostStandardPropagate> findAllPropagate();
+    List<LaborCostStandardPropagate> findAllPropagateView();
     LaborCostStandard findById(Integer operationId);
     int save(LaborCostStandard laborCostStandard);
     int update(Integer operationId, LaborCostStandard laborCostStandard);
