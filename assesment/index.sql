@@ -4,8 +4,8 @@ drop sequence details_id_seq;
 drop sequence store_id_seq;
 drop sequence shipment_accounting_id_seq;
 
-drop table available_details_in_store;
 drop table shipment_accounting;
+drop table available_details_in_store;
 drop table store;
 drop table details;
 

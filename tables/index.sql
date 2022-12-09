@@ -84,7 +84,6 @@ create or replace trigger on_delete__profession__labor_cost__set_null before del
     end;
 /
 
-drop procedure seed_data;
 create or replace procedure seed_data as
     begin
         insert into professions (name) values ('Дизайнер');
@@ -124,9 +123,6 @@ create or replace procedure seed_data as
 begin
     seed_data();
 end;
-
-drop package body furniture_details;
-drop package furniture_details;
 
 create or replace package furniture_details as
 
