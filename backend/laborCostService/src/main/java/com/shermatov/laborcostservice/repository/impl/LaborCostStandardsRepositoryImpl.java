@@ -1,14 +1,22 @@
 package com.shermatov.laborcostservice.repository.impl;
 
 import com.shermatov.laborcostservice.model.LaborCostStandard;
+import com.shermatov.laborcostservice.model.LaborCostStandardDetail;
+import com.shermatov.laborcostservice.model.LaborCostStandardDetailMapper;
 import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.repository.LaborCostStandardsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.jdbc.core.BeanPropertyRowMapper;
-import org.springframework.jdbc.core.JdbcTemplate;
+import org.springframework.jdbc.core.*;
 import org.springframework.stereotype.Repository;
 
+import java.sql.CallableStatement;
+import java.sql.Connection;
+import java.sql.SQLException;
+import java.sql.Types;
+import java.util.ArrayList;
+import java.util.Arrays;
 import java.util.List;
+import java.util.Map;
 
 @Repository
 public class LaborCostStandardsRepositoryImpl implements LaborCostStandardsRepository {
@@ -71,5 +79,10 @@ public class LaborCostStandardsRepositoryImpl implements LaborCostStandardsRepos
     public int deleteById(Integer operationId) {
         return jdbcTemplate.update("DELETE FROM labor_cost_standards WHERE operation_id=?",
                 operationId);
+    }
+
+    @Override
+    public List<LaborCostStandardDetail> findByDetailName(String detailName) {
+        return jdbcTemplate.query("SELECT * from TABLE ( furniture_details.get_operations_with_detail(?) )", new LaborCostStandardDetailMapper(), detailName);
     }
 }

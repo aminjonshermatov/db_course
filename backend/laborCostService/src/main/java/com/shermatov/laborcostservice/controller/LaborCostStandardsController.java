@@ -1,6 +1,7 @@
 package com.shermatov.laborcostservice.controller;
 
 import com.shermatov.laborcostservice.model.LaborCostStandard;
+import com.shermatov.laborcostservice.model.LaborCostStandardDetail;
 import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.service.LaborCostStandardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -38,6 +39,11 @@ public class LaborCostStandardsController {
     @GetMapping("/{operationId}")
     LaborCostStandard getLaborCostStandardById(@PathVariable Integer operationId) {
         return laborCostStandardService.getLaborCostStandard(operationId);
+    }
+
+    @GetMapping("/with_detail/{detailName}")
+    List<LaborCostStandardDetail> getLaborCostStandardSWithDetailName(@PathVariable String detailName) {
+        return laborCostStandardService.getLaborCostStandardSWithDetailName(detailName);
     }
 
     @PostMapping

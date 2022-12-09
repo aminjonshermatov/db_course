@@ -2,6 +2,7 @@ package com.shermatov.laborcostservice.service.impl;
 
 import com.shermatov.laborcostservice.exception.ResourceNotFoundException;
 import com.shermatov.laborcostservice.model.LaborCostStandard;
+import com.shermatov.laborcostservice.model.LaborCostStandardDetail;
 import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.repository.LaborCostStandardsRepository;
 import com.shermatov.laborcostservice.service.LaborCostStandardService;
@@ -54,5 +55,10 @@ public class LaborCostStandardServiceImpl implements LaborCostStandardService {
     @Override
     public void removeLaborCostStandard(Integer operationId) {
         laborCostStandardsRepository.deleteById(operationId);
+    }
+
+    @Override
+    public List<LaborCostStandardDetail> getLaborCostStandardSWithDetailName(String detailName) {
+        return laborCostStandardsRepository.findByDetailName(detailName);
     }
 }
