@@ -1,6 +1,7 @@
 package com.shermatov.laborcostservice.controller;
 
 import com.shermatov.laborcostservice.model.LaborCostStandard;
+import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.service.LaborCostStandardService;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.http.HttpStatus;
@@ -22,6 +23,11 @@ public class LaborCostStandardsController {
     @GetMapping
     List<LaborCostStandard> getLaborCostStandards() {
         return laborCostStandardService.getLaborCostStandards();
+    }
+
+    @GetMapping("/propagate")
+    List<LaborCostStandardPropagate> getLaborCostStandardsPropagate() {
+        return laborCostStandardService.getLaborCostStandardsPropagate();
     }
 
     @GetMapping("/{operationId}")

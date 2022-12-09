@@ -2,6 +2,7 @@ package com.shermatov.laborcostservice.repository.impl;
 
 import com.shermatov.laborcostservice.model.Detail;
 import com.shermatov.laborcostservice.model.LaborCostStandard;
+import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.repository.LaborCostStandardsRepository;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.jdbc.core.BeanPropertyRowMapper;
@@ -20,6 +21,15 @@ public class LaborCostStandardsRepositoryImpl implements LaborCostStandardsRepos
     public List<LaborCostStandard> findAll() {
         return jdbcTemplate.query("SELECT * FROM labor_cost_standards",
                 BeanPropertyRowMapper.newInstance(LaborCostStandard.class));
+    }
+
+    @Override
+    public List<LaborCostStandardPropagate> findAllPropagate() {
+        return jdbcTemplate.query("SELECT d.detail_id detailId, d.type detailType, d.name detailName, d.measure_unit detailMeasureUnit, d.price detailPrice, operation_id operationId, preparatory_time preparatoryTime, piece_time pieceTime, p.profession_id professionId, p.name professionName, pg.price_guide_id priceGuideId, pg.hourly_rate priceGuideHourlyRate FROM labor_cost_standards\n" +
+                        "LEFT JOIN details d ON labor_cost_standards.detail_id = d.detail_id\n" +
+                        "LEFT JOIN price_guide pg ON labor_cost_standards.price_guide_id = pg.price_guide_id\n" +
+                        "LEFT JOIN professions p ON p.profession_id = labor_cost_standards.profession_id",
+                BeanPropertyRowMapper.newInstance(LaborCostStandardPropagate.class));
     }
 
     @Override

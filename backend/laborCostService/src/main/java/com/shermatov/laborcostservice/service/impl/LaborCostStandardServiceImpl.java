@@ -2,6 +2,7 @@ package com.shermatov.laborcostservice.service.impl;
 
 import com.shermatov.laborcostservice.exception.ResourceNotFoundException;
 import com.shermatov.laborcostservice.model.LaborCostStandard;
+import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.repository.LaborCostStandardsRepository;
 import com.shermatov.laborcostservice.service.LaborCostStandardService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -19,6 +20,11 @@ public class LaborCostStandardServiceImpl implements LaborCostStandardService {
     @Override
     public List<LaborCostStandard> getLaborCostStandards() {
         return laborCostStandardsRepository.findAll();
+    }
+
+    @Override
+    public List<LaborCostStandardPropagate> getLaborCostStandardsPropagate() {
+        return laborCostStandardsRepository.findAllPropagate();
     }
 
     @Override
