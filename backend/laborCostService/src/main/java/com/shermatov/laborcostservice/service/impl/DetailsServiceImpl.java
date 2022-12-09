@@ -45,4 +45,9 @@ public class DetailsServiceImpl implements DetailsService {
         detailsRepository.deleteById(detailId);
     }
 
+    @Override
+    public Integer getMostExpensiveDetail() {
+        return detailsRepository.mostExpensiveDetail();
+    }
+
 }

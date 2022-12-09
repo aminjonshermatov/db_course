@@ -11,5 +11,5 @@ public interface DetailsRepository {
     int save(Detail detail);
     int update(Integer detailId, Detail detail);
     int deleteById(Integer detailId);
-
+    Integer mostExpensiveDetail();
 }

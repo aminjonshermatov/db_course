@@ -51,4 +51,10 @@ public class DetailsRepositoryImpl implements DetailsRepository {
         return jdbcTemplate.update("DELETE FROM details WHERE detail_id=?",
                 detailId);
     }
+
+    @Override
+    public Integer mostExpensiveDetail() {
+        return jdbcTemplate.queryForObject("SELECT furniture_details.most_expensive_detail() FROM dual",
+                Integer.class);
+    }
 }

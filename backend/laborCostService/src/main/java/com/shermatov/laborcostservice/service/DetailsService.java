@@ -10,5 +10,5 @@ public interface DetailsService {
     void createDetail(Detail detail);
     void updateDetail(Integer detailId, Detail detail);
     void removeDetail(Integer detailId);
-
+    Integer getMostExpensiveDetail();
 }

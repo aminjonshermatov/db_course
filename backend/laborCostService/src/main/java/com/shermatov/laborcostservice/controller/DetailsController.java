@@ -27,6 +27,11 @@ public class DetailsController {
         return detailsService.getDetail(detailId);
     }
 
+    @GetMapping("/most_expensive_detail")
+    Integer getMostExpensiveDetail() {
+        return detailsService.getMostExpensiveDetail();
+    }
+
     @PostMapping
     ResponseEntity<String> createDetail(@RequestBody Detail detail) {
         detailsService.createDetail(detail);
