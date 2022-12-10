@@ -1,0 +1,50 @@
+<p>details-tab works!</p>
+<button mat-raised-button (click)="notify(true)">Success</button>
+<button mat-raised-button (click)="notify(false)">Error</button>
+<div class="container"  style="width: 90%; padding: 2rem">
+  <table
+    mat-table
+    [dataSource]="(detailsAsMatTableDataSource$ | async) || dataSource"
+    matSort
+    class="mat-elevation-z8"
+    style="width: 70%;">
+
+    <ng-container matColumnDef="detailId">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by detailId">
+        Detail Id
+      </th>
+      <td mat-cell *matCellDef="let element"> {{ element.detailId }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="name">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
+        Name
+      </th>
+      <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="type">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type">
+        Type
+      </th>
+      <td mat-cell *matCellDef="let element"> {{ element.type }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="price">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by price">
+        Price
+      </th>
+      <td mat-cell *matCellDef="let element"> {{ element.price }} </td>
+    </ng-container>
+
+    <ng-container matColumnDef="measureUnit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by measureUnit">
+        Measure Unit
+      </th>
+      <td mat-cell *matCellDef="let element"> {{ element.measureUnit }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columns"></tr>
+    <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+  </table>
+</div>
