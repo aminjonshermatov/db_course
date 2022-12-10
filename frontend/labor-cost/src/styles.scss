@@ -20,5 +20,40 @@ snack-bar-container.error {
 }
 
 snack-bar-container.notification {
-  color:white;
+  color: white;
+}
+
+.mat-table {
+  background-color: transparent !important;
+}
+
+table {
+  width: 100%;
+  border-collapse: collapse;
+  border-radius: 1em;
+}
+
+table tr:last-child td /*To remove the last border*/
+{
+  border-bottom: 0 solid
+}
+
+.mat-button.mat-success {
+  color: #155724;
+}
+
+.mat-button.mat-success:hover {
+  background-color: #f0fff3;
+}
+
+.mat-raised-button.mat-success,
+.mat-flat-button.mat-success,
+.mat-fab.mat-success,
+.mat-mini-fab.mat-success {
+  color: #f0fff3;
+  background-color: #155724;
+}
+
+.mat-icon-button.mat-success {
+  color: #155724;
 }

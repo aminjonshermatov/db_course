@@ -3,7 +3,6 @@ package com.shermatov.laborcostservice.controller;
 import com.shermatov.laborcostservice.model.Detail;
 import com.shermatov.laborcostservice.service.DetailsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -33,9 +32,8 @@ public class DetailsController {
     }
 
     @PostMapping
-    ResponseEntity<String> createDetail(@RequestBody Detail detail) {
-        detailsService.createDetail(detail);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    Detail createDetail(@RequestBody Detail detail) {
+        return detailsService.createDetail(detail);
     }
 
     @PutMapping("/{detailId}")

@@ -18,7 +18,7 @@ public class LaborCostServiceApplication {
         return new WebMvcConfigurer() {
             @Override
             public void addCorsMappings(CorsRegistry registry) {
-                registry.addMapping("/api/*").allowedOrigins("http://localhost:4200");
+                registry.addMapping("/api/**").allowedOrigins("*").allowedMethods("GET", "POST","PUT", "DELETE");
             }
         };
     }

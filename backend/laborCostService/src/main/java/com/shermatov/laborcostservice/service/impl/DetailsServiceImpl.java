@@ -31,8 +31,8 @@ public class DetailsServiceImpl implements DetailsService {
     }
 
     @Override
-    public void createDetail(Detail detail) {
-        detailsRepository.save(detail);
+    public Detail createDetail(Detail detail) {
+        return detailsRepository.save(detail);
     }
 
     @Override

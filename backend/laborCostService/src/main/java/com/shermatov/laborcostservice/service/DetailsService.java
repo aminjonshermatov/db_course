@@ -7,7 +7,7 @@ import java.util.List;
 public interface DetailsService {
     List<Detail> getDetails();
     Detail getDetail(Integer detailId);
-    void createDetail(Detail detail);
+    Detail createDetail(Detail detail);
     void updateDetail(Integer detailId, Detail detail);
     void removeDetail(Integer detailId);
     Integer getMostExpensiveDetail();

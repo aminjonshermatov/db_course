@@ -1,4 +1,4 @@
-export enum DetailType { PURCHASED, IN_HOUSE }
+export enum DetailType { PURCHASED = 'PURCHASED', IN_HOUSE = 'IN_HOUSE' }
 
 export interface IDetail {
 

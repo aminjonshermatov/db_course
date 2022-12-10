@@ -1,6 +1,3 @@
-<p>details-tab works!</p>
-<button mat-raised-button (click)="notify(true)">Success</button>
-<button mat-raised-button (click)="notify(false)">Error</button>
 <div class="container"  style="width: 90%; padding: 2rem">
   <table
     mat-table
@@ -14,6 +11,7 @@
         Detail Id
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.detailId }} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="name">
@@ -21,13 +19,15 @@
         Name
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="type">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by type">
         Type
       </th>
-      <td mat-cell *matCellDef="let element"> {{ element.type }} </td>
+      <td mat-cell *matCellDef="let element"> {{ element.type | detailType }} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="price">
@@ -35,6 +35,7 @@
         Price
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.price }} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="measureUnit">
@@ -42,9 +43,42 @@
         Measure Unit
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.measureUnit }} </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+
+    <ng-container matColumnDef="edit">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">Edit</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button
+                matTooltip="Click to Edit"
+                class="iconbutton"
+                color="primary"
+                (click)="editDetail(element)">
+          <mat-icon>edit</mat-icon>
+        </button>
+      </td>
+      <td mat-footer-cell *matFooterCellDef></td>
+    </ng-container>
+    <ng-container matColumnDef="delete">
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">Delete</th>
+      <td mat-cell *matCellDef="let element">
+        <button mat-icon-button
+                matTooltip="Click to Delete"
+                class="iconbutton"
+                (click)="deleteDetail(element.detailId)"
+                color="warn">
+          <mat-icon>delete</mat-icon>
+        </button>
+      </td>
+      <td mat-footer-cell *matFooterCellDef>
+        <button mat-flat-button
+                (click)="createDetail()"
+                color="success">Create new detail</button>
+      </td>
     </ng-container>
 
     <tr mat-header-row *matHeaderRowDef="columns"></tr>
     <tr mat-row *matRowDef="let row; columns: columns;"></tr>
+    <tr mat-footer-row *matFooterRowDef="columns"></tr>
   </table>
 </div>

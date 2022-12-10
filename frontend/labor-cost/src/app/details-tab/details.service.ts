@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, map, tap} from "rxjs";
+import {BehaviorSubject, tap} from "rxjs";
 import {IDetail} from "./detail.model";
 import {NotificationService} from "../notification.service";
 
@@ -21,7 +21,7 @@ export class DetailsService {
   public loadDetails(): void {
     this.httpClient.get<IDetail[]>(`${this.baseUrl}/details`)
       .pipe(
-        map(details => this.detailsSub$.next(details))
+        tap(details => this.detailsSub$.next(details))
       )
       .subscribe({
         error: err => {
@@ -34,7 +34,7 @@ export class DetailsService {
   public loadSelectedDetail(detailId: number): void {
     this.httpClient.get<IDetail>(`${this.baseUrl}/details/${detailId}`)
       .pipe(
-        map(detail => this.selectedDetailSub$.next(detail))
+        tap(detail => this.selectedDetailSub$.next(detail))
       )
       .subscribe({
         error: err => {
@@ -47,7 +47,7 @@ export class DetailsService {
   public createDetail(detail: IDetail): void {
     this.httpClient.post<IDetail>(`${this.baseUrl}/details`, detail)
       .pipe(
-        map(createdDetail => this.detailsSub$.next([createdDetail]))
+        tap(createdDetail => this.detailsSub$.next([...this.detailsSub$.value, createdDetail]))
       )
       .subscribe({
         error: err => {
@@ -57,15 +57,16 @@ export class DetailsService {
       })
   }
 
-  public editDetail(detail: IDetail): void {
-    this.httpClient.put<IDetail>(`${this.baseUrl}/details/${detail.detailId}`, detail)
+  public editDetail(detailToUpdate: IDetail): void {
+    this.httpClient.put<void>(`${this.baseUrl}/details/${detailToUpdate.detailId}`, detailToUpdate)
       .pipe(
-        map(updatedDetail => this.detailsSub$.next(
-          [...this.detailsSub$.value.filter(detail => detail.detailId != updatedDetail.detailId), updatedDetail]
+        tap(_ => this.detailsSub$.next(
+          [...this.detailsSub$.value.filter(detail => detail.detailId != detailToUpdate.detailId), detailToUpdate]
         ))
       )
       .subscribe({
         error: err => {
+          console.log(err)
           this.notificationService.error(NotificationService._getErrorMsg(err));
           this.detailsSub$.next([]);
         }

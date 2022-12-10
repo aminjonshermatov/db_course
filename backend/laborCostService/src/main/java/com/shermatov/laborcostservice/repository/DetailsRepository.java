@@ -8,8 +8,8 @@ public interface DetailsRepository {
 
     List<Detail> findAll();
     Detail findById(Integer detailId);
-    int save(Detail detail);
-    int update(Integer detailId, Detail detail);
+    Detail save(Detail detail);
+    void update(Integer detailId, Detail detail);
     int deleteById(Integer detailId);
     Integer mostExpensiveDetail();
 }
