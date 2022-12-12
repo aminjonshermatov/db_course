@@ -1,7 +1,7 @@
 import { Injectable } from '@angular/core';
 import {environment} from "../../environments/environment";
 import {HttpClient} from "@angular/common/http";
-import {BehaviorSubject, tap} from "rxjs";
+import {BehaviorSubject, Subject, tap} from "rxjs";
 import {IDetail} from "./detail.model";
 import {NotificationService} from "../notification.service";
 
@@ -14,6 +14,7 @@ export class DetailsService {
 
   public readonly detailsSub$: BehaviorSubject<IDetail[]> = new BehaviorSubject<IDetail[]>([]);
   public readonly selectedDetailSub$: BehaviorSubject<IDetail | null> = new BehaviorSubject<IDetail | null>(null);
+  public readonly mostExpensiveDetailSub$: Subject<number> = new Subject<number>();
 
   constructor(private readonly httpClient: HttpClient,
               private readonly notificationService: NotificationService) { }
@@ -82,6 +83,19 @@ export class DetailsService {
         error: err => {
           this.notificationService.error(NotificationService._getErrorMsg(err));
           this.detailsSub$.next([]);
+        }
+      })
+  }
+
+  public loadMostExpensiveDetail(): void {
+    this.httpClient.get<number>(`${this.baseUrl}/details/most_expensive_detail`)
+      .pipe(
+        tap(cost => this.mostExpensiveDetailSub$.next(cost))
+      )
+      .subscribe({
+        error: err => {
+          this.notificationService.error(NotificationService._getErrorMsg(err));
+          this.mostExpensiveDetailSub$.next(0);
         }
       })
   }

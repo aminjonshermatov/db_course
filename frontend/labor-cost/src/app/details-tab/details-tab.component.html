@@ -57,7 +57,11 @@
           <mat-icon>edit</mat-icon>
         </button>
       </td>
-      <td mat-footer-cell *matFooterCellDef></td>
+      <td mat-footer-cell *matFooterCellDef>
+        <button mat-flat-button
+                (click)="loadMostExpensiveDetail()"
+                color="accent">Expensive detail</button>
+      </td>
     </ng-container>
     <ng-container matColumnDef="delete">
       <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">Delete</th>
@@ -82,3 +86,11 @@
     <tr mat-footer-row *matFooterRowDef="columns"></tr>
   </table>
 </div>
+
+<ng-template #most_expensive_detail_dialog>
+  <h2 matDialogTitle>Function call</h2>
+  <p matDialogContent>Most expensive detail's cost: <b>{{ mostExpensiveDetail$ | async }}</b></p>
+  <mat-dialog-actions align="end">
+    <button mat-button (click)="closeExpensiveDialog()">Close</button>
+  </mat-dialog-actions>
+</ng-template>

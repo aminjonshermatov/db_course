@@ -8,6 +8,8 @@
 имеется деталь в сборке которой рабочий такой профессии выполняет такую работу.
 */
 
+alter SESSION set CURRENT_SCHEMA = AMINJON;
+
 drop sequence details_id_seq;
 drop sequence price_guide_seq;
 drop sequence profession_id_seq;

@@ -1,10 +1,10 @@
-import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {catchError, map, Observable, of} from "rxjs";
+import {AfterViewInit, Component, OnInit, TemplateRef, ViewChild} from '@angular/core';
+import {catchError, map, Observable, of, tap} from "rxjs";
 import {Detail, DetailType, IDetail} from "./detail.model";
 import {DetailsService} from "./details.service";
 import {MatTableDataSource} from "@angular/material/table";
 import {MatSort} from "@angular/material/sort";
-import {MatDialog} from "@angular/material/dialog";
+import {MatDialog, MatDialogRef} from "@angular/material/dialog";
 import {EditCreateDetailComponent} from "./edit-create-detail/edit-create-detail.component";
 
 @Component({
@@ -15,6 +15,9 @@ import {EditCreateDetailComponent} from "./edit-create-detail/edit-create-detail
 export class DetailsTabComponent implements OnInit, AfterViewInit {
 
   @ViewChild(MatSort) sort: MatSort = new MatSort();
+  @ViewChild('most_expensive_detail_dialog') expensiveDetailDialog?: TemplateRef<any>;
+
+  private expensiveDetailDialogRef?: MatDialogRef<any>;
 
   public readonly columns: string[] = ['detailId', 'name', 'type', 'price', 'measureUnit', 'edit', 'delete']
   public readonly dataSource: MatTableDataSource<IDetail> = new MatTableDataSource<IDetail>([]);
@@ -31,6 +34,7 @@ export class DetailsTabComponent implements OnInit, AfterViewInit {
         return of(this.dataSource);
       })
     );
+  public readonly mostExpensiveDetail$: Observable<number> = this.detailService.mostExpensiveDetailSub$.asObservable();
 
   constructor(private readonly detailService: DetailsService,
               private readonly dialog: MatDialog) { }
@@ -44,7 +48,6 @@ export class DetailsTabComponent implements OnInit, AfterViewInit {
   }
 
   public editDetail(detail: IDetail): void {
-    console.log(detail);
     this.dialog.open(EditCreateDetailComponent, {
       data: {detail, isEdit: true},
     }).afterClosed()
@@ -61,4 +64,14 @@ export class DetailsTabComponent implements OnInit, AfterViewInit {
   public deleteDetail(detailId: number): void {
     this.detailService.deleteDetail(detailId);
   }
+
+  public loadMostExpensiveDetail(): void {
+    this.detailService.loadMostExpensiveDetail();
+    this.expensiveDetailDialogRef = this.dialog.open(this.expensiveDetailDialog!);
+  }
+
+  public closeExpensiveDialog(): void {
+    this.expensiveDetailDialogRef?.close();
+  }
+
 }
