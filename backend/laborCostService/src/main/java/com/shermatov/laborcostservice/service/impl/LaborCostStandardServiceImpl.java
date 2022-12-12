@@ -43,8 +43,8 @@ public class LaborCostStandardServiceImpl implements LaborCostStandardService {
     }
 
     @Override
-    public void createLaborCostStandard(LaborCostStandard laborCostStandards) {
-        laborCostStandardsRepository.save(laborCostStandards);
+    public LaborCostStandard createLaborCostStandard(LaborCostStandard laborCostStandards) {
+        return laborCostStandardsRepository.save(laborCostStandards);
     }
 
     @Override

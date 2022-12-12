@@ -8,7 +8,7 @@
 
     <ng-container matColumnDef="priceGuideId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by priceGuideId">
-        Price Guide Id
+        <b>Price Guide Id</b>
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.priceGuideId }} </td>
       <td mat-footer-cell *matFooterCellDef></td>
@@ -16,14 +16,16 @@
 
     <ng-container matColumnDef="hourlyRate">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by hourlyRate">
-        Hourly Rate
+        <b>Hourly Rate</b>
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.hourlyRate }} </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">Edit</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">
+        <b>Edit</b>
+      </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button
                 matTooltip="Click to Edit"
@@ -36,7 +38,9 @@
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">Delete</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">
+        <b>Delete</b>
+      </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button
                 matTooltip="Click to Delete"

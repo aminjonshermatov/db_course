@@ -164,15 +164,12 @@ create or replace package body furniture_details as
 end furniture_details;
 /
 
-CREATE VIEW labor_cost_all_details AS
-SELECT d.detail_id detailId, d.type detailType, d.name detailName, d.measure_unit detailMeasureUnit, d.price detailPrice, operation_id operationId, preparatory_time preparatoryTime, piece_time pieceTime, p.profession_id professionId, p.name professionName, pg.price_guide_id priceGuideId, pg.hourly_rate priceGuideHourlyRate
-FROM labor_cost_standards
-         LEFT JOIN details d ON labor_cost_standards.detail_id = d.detail_id
-         LEFT JOIN price_guide pg ON labor_cost_standards.price_guide_id = pg.price_guide_id
-         LEFT JOIN professions p ON p.profession_id = labor_cost_standards.profession_id;
+CREATE OR REPLACE VIEW labor_cost_all_details AS
+SELECT d.detail_id detailId, d.type detailType, d.name detailName, d.measure_unit detailMeasureUnit, d.price detailPrice, operation_id operationId, qualification, preparatory_time preparatoryTime, piece_time pieceTime, p.profession_id professionId, p.name professionName, pg.price_guide_id priceGuideId, pg.hourly_rate priceGuideHourlyRate
+FROM AMINJON.labor_cost_standards
+         LEFT JOIN AMINJON.details d ON labor_cost_standards.detail_id = d.detail_id
+         LEFT JOIN AMINJON.price_guide pg ON labor_cost_standards.price_guide_id = pg.price_guide_id
+         LEFT JOIN AMINJON.professions p ON p.profession_id = labor_cost_standards.profession_id;
 
 select furniture_details.most_expensive_detail() from dual;
 select * from table( furniture_details.get_operations_with_detail('ЛДСП') );
-
-SELECT * from AMINJON.DETAILS;
-SELECT * from AMINJON.professions;

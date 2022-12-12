@@ -10,7 +10,13 @@
           fxLayoutGap="10px">
       <mat-card-content>
 
+        <mat-form-field appearance="fill" *ngIf="data.isEdit">
+          <mat-label>Profession's Id</mat-label>
+          <input matInput type="number" placeholder="Profession's Id" id="professionId" [value]="data.profession.professionId.toString()" [disabled]="true">
+        </mat-form-field>
+
         <mat-form-field appearance="fill">
+          <mat-label>Profession's name</mat-label>
           <input matInput type="text" placeholder="Profession's name" formControlName="name" id="name">
           <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
           <mat-error *ngIf="hasError('name', 'max')">Name must be less than 60 characters</mat-error>

@@ -11,7 +11,7 @@ public class LaborCostStandardDetailMapper implements RowMapper<LaborCostStandar
                 .detailId(rs.getInt("detail_id"))
                 .operationId(rs.getInt("operation_id"))
                 .detailName(rs.getString("detail_name"))
-                .price(rs.getDouble("price"))
+                .detailPrice(rs.getDouble("price"))
                 .build();
     }
 }

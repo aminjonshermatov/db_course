@@ -11,7 +11,13 @@
           fxLayoutGap="10px">
       <mat-card-content>
 
+        <mat-form-field appearance="fill" *ngIf="data.isEdit">
+          <mat-label>Price Guide's Id</mat-label>
+          <input matInput type="number" placeholder="Price Guide's Id" id="priceGuideId" [value]="data.priceGuide.priceGuideId.toString()" [disabled]="true">
+        </mat-form-field>
+
         <mat-form-field appearance="fill">
+          <mat-label>Hourly rate</mat-label>
           <input matInput type="number" placeholder="Hourly rate" formControlName="hourlyRate" id="hourlyRate">
           <mat-error *ngIf="hasError('hourlyRate', 'required')">Hourly rate is required</mat-error>
           <mat-error *ngIf="hasError('hourlyRate', 'min')">Minimum rate is 0.1</mat-error>

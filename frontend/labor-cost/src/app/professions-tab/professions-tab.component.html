@@ -8,7 +8,7 @@
 
     <ng-container matColumnDef="professionId">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by professionId">
-        Profession Id
+        <b>Profession Id</b>
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.professionId }} </td>
       <td mat-footer-cell *matFooterCellDef></td>
@@ -16,14 +16,16 @@
 
     <ng-container matColumnDef="name">
       <th mat-header-cell *matHeaderCellDef mat-sort-header sortActionDescription="Sort by name">
-        Name
+        <b>Name</b>
       </th>
       <td mat-cell *matCellDef="let element"> {{ element.name }} </td>
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
 
     <ng-container matColumnDef="edit">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">Edit</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">
+        <b>Edit</b>
+      </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button
                 matTooltip="Click to Edit"
@@ -36,7 +38,9 @@
       <td mat-footer-cell *matFooterCellDef></td>
     </ng-container>
     <ng-container matColumnDef="delete">
-      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">Delete</th>
+      <th mat-header-cell *matHeaderCellDef mat-sort-header disabled="true">
+        <b>Delete</b>
+      </th>
       <td mat-cell *matCellDef="let element">
         <button mat-icon-button
                 matTooltip="Click to Delete"

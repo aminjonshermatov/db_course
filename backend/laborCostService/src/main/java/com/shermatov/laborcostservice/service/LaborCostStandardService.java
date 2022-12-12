@@ -12,7 +12,7 @@ public interface LaborCostStandardService {
     List<LaborCostStandardPropagate> getLaborCostStandardsPropagate();
     List<LaborCostStandardPropagate> getLaborCostStandardsPropagateView();
     LaborCostStandard getLaborCostStandard(Integer operationId);
-    void createLaborCostStandard(LaborCostStandard laborCostStandards);
+    LaborCostStandard createLaborCostStandard(LaborCostStandard laborCostStandards);
     void updateLaborCostStandard(Integer operationId, LaborCostStandard laborCostStandard);
     void removeLaborCostStandard(Integer operationId);
     List<LaborCostStandardDetail> getLaborCostStandardSWithDetailName(String detailName);

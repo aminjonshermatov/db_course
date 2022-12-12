@@ -1,0 +1,71 @@
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+    <mat-card-title>{{ data.isEdit ? 'Edit' : 'Create' }} labor cost standard</mat-card-title>
+    <form [formGroup]="laborCostStandardForm"
+          autocomplete="off"
+          novalidate
+          (ngSubmit)="save()"
+          fxLayout="column wrap"
+          fxLayoutAlign="center center"
+          fxLayoutGap="10px">
+      <mat-card-content>
+
+        <mat-form-field appearance="fill" *ngIf="data.isEdit">
+          <mat-label>Operation Id</mat-label>
+          <input matInput type="number" placeholder="Operation Id" id="operationId" [value]="data.laborCostStandard.operationId.toString()" [disabled]="true">
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Detail's Id</mat-label>
+          <input matInput type="number" placeholder="Detail's Id" formControlName="detailId" id="detailId">
+          <mat-error *ngIf="hasError('detailId', 'required')">Detail Id is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Profession's Id</mat-label>
+          <input matInput type="number" placeholder="Profession's Id" formControlName="professionId" id="professionId">
+          <mat-error *ngIf="hasError('professionId', 'required')">Profession Id is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Price Guide's Id</mat-label>
+          <input matInput type="number" placeholder="Price Guide's Id" formControlName="priceGuideId" id="priceGuideId">
+          <mat-error *ngIf="hasError('priceGuideId', 'required')">Price Guide Id is required</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Qualification</mat-label>
+          <input matInput type="number" placeholder="Qualification" formControlName="qualification" id="qualification">
+          <mat-error *ngIf="hasError('qualification', 'required')">Qualification is required</mat-error>
+          <mat-error *ngIf="hasError('qualification', 'min')">Qualification must be greater or equal 1</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Preparatory Time</mat-label>
+          <input matInput type="number" placeholder="Preparatory Time" formControlName="preparatoryTime" id="preparatoryTime">
+          <mat-error *ngIf="hasError('preparatoryTime', 'required')">Preparatory Time is required</mat-error>
+          <mat-error *ngIf="hasError('preparatoryTime', 'min')">Preparatory Time must be greater or equal 0</mat-error>
+        </mat-form-field>
+
+        <mat-form-field appearance="fill">
+          <mat-label>Piece Time</mat-label>
+          <input matInput type="number" placeholder="Piece Time" formControlName="pieceTime" id="pieceTime">
+          <mat-error *ngIf="hasError('pieceTime', 'required')">Piece Time is required</mat-error>
+          <mat-error *ngIf="hasError('pieceTime', 'min')">Piece Time must be greater or equal 0</mat-error>
+        </mat-form-field>
+
+      </mat-card-content>
+      <mat-card-actions>
+        <button mat-raised-button
+                color="warn"
+                type="button"
+                (click)="onNoClick()">Close</button>
+        <button mat-raised-button
+                color="primary"
+                [disabled]="!laborCostStandardForm.valid"
+                (click)="save()">{{ data.isEdit ? 'Update' : 'Create' }}</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</section>
+

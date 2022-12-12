@@ -5,7 +5,7 @@ export interface IPriceGuide {
 
 }
 
-export class PriceGuide implements IPriceGuide {
+export class PriceGuideModel implements IPriceGuide {
 
   constructor(public priceGuideId: number,
               public hourlyRate: number) { }

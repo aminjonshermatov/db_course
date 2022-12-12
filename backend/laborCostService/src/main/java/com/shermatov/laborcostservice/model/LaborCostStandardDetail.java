@@ -14,7 +14,7 @@ public class LaborCostStandardDetail {
     private Integer detailId;
     private Integer operationId;
     private String  detailName;
-    private Double price;
+    private Double detailPrice;
 
 }
 

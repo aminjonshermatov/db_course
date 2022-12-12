@@ -5,7 +5,6 @@ import com.shermatov.laborcostservice.model.LaborCostStandardDetail;
 import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.service.LaborCostStandardService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -47,9 +46,8 @@ public class LaborCostStandardsController {
     }
 
     @PostMapping
-    ResponseEntity<String> createLaborCostStandard(@RequestBody LaborCostStandard laborCostStandard) {
-        laborCostStandardService.createLaborCostStandard(laborCostStandard);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    LaborCostStandard createLaborCostStandard(@RequestBody LaborCostStandard laborCostStandard) {
+        return laborCostStandardService.createLaborCostStandard(laborCostStandard);
     }
 
     @PutMapping("/{operationId}")

@@ -2,7 +2,7 @@ import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {IProfession} from "../professions-tab/profession.model";
-import {IPriceGuide, PriceGuide} from "./price-guide";
+import {IPriceGuide, PriceGuideModel} from "./price-guide.model";
 import {catchError, map, Observable, of} from "rxjs";
 import {PriceGuidesService} from "./price-guides.service";
 import {MatDialog} from "@angular/material/dialog";
@@ -54,7 +54,7 @@ export class PriceGuidesTabComponent implements OnInit, AfterViewInit {
 
   public createPriceGuide(): void {
     this.dialog.open(EditCreatePriceGuideComponent, {
-      data: { priceGuide: new PriceGuide(-1, 0), isEdit: false }
+      data: { priceGuide: new PriceGuideModel(-1, 0), isEdit: false }
     }).afterClosed()
       .subscribe(data => data.isEdit && this.priceGuideService.createPriceGuide(data.priceGuide))
   }

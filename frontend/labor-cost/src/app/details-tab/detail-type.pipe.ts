@@ -6,9 +6,12 @@ import {DetailType} from "./detail.model";
 })
 export class DetailTypePipe implements PipeTransform {
 
-  transform(detailType: DetailType): string {
-    if (detailType == DetailType.PURCHASED) return 'Покупная';
-    return 'Cобственного производства';
+  transform(detailType: any): string {
+    if (typeof detailType == 'string') {
+      if (detailType == DetailType.PURCHASED) return 'Покупная';
+      else if (detailType == DetailType.IN_HOUSE) return 'Cобственного производства';
+    }
+    return detailType;
   }
 
 }

@@ -29,7 +29,7 @@ export class NotificationService {
   }
 
   static _getErrorMsg(err?: any): string {
-    return err?.error['detail'] || err?.message || 'Unknown error!';
+    return err?.error || err?.message || 'Unknown error!';
   }
 
 }

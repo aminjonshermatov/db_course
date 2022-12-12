@@ -29,6 +29,8 @@ import {MatSelectModule} from "@angular/material/select";
 import {MatCardModule} from "@angular/material/card";
 import { EditCreateProfessionComponent } from './professions-tab/edit-create-profession/edit-create-profession.component';
 import { EditCreatePriceGuideComponent } from './price-guides-tab/edit-create-price-guide/edit-create-price-guide.component';
+import {MatSlideToggleModule} from "@angular/material/slide-toggle";
+import { EditCreateLaborCostStandardComponent } from './labor-cost-standards-tab/edit-create-labor-cost-standard/edit-create-labor-cost-standard.component';
 
 @NgModule({
   declarations: [
@@ -40,7 +42,8 @@ import { EditCreatePriceGuideComponent } from './price-guides-tab/edit-create-pr
     DetailTypePipe,
     EditCreateDetailComponent,
     EditCreateProfessionComponent,
-    EditCreatePriceGuideComponent
+    EditCreatePriceGuideComponent,
+    EditCreateLaborCostStandardComponent
   ],
     imports: [
         BrowserModule,
@@ -63,6 +66,7 @@ import { EditCreatePriceGuideComponent } from './price-guides-tab/edit-create-pr
         FlexModule,
         MatSelectModule,
         MatCardModule,
+        MatSlideToggleModule,
     ],
   providers: [
     DetailsService

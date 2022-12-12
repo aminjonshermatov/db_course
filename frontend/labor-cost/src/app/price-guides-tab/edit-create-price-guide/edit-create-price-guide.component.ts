@@ -1,7 +1,7 @@
 import {Component, Inject, OnInit} from '@angular/core';
 import {FormGroup, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
-import {IPriceGuide} from "../price-guide";
+import {IPriceGuide} from "../price-guide.model";
 import {NotificationService} from "../../notification.service";
 
 @Component({

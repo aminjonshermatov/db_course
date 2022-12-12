@@ -10,7 +10,13 @@
           fxLayoutGap="10px">
       <mat-card-content>
 
+        <mat-form-field appearance="fill" *ngIf="data.isEdit">
+          <mat-label>Detail's Id</mat-label>
+          <input matInput type="number" placeholder="Detail's Id" id="detailId" [value]="data.detail.detailId.toString()" [disabled]="true">
+        </mat-form-field>
+
         <mat-form-field appearance="fill">
+          <mat-label>Detail's name</mat-label>
           <input matInput type="text" placeholder="Detail's name" formControlName="name" id="name">
           <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
         </mat-form-field>
@@ -25,12 +31,14 @@
         </mat-form-field>
 
         <mat-form-field appearance="fill">
+          <mat-label>Detail's price</mat-label>
           <input matInput type="number" placeholder="Detail's price" formControlName="price" id="price">
           <mat-error *ngIf="hasError('price', 'required')">Price is required</mat-error>
           <mat-error *ngIf="hasError('price', 'min')">Detail's price must be greater or equal 0.1</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">
+          <mat-label>Detail's measure unit</mat-label>
           <input matInput type="text" placeholder="Detail's measure unit" formControlName="measureUnit" id="measureUnit">
           <mat-error *ngIf="hasError('measureUnit', 'required')">Measure unit is required</mat-error>
         </mat-form-field>
