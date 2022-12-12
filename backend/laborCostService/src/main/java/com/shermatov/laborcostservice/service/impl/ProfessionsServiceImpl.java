@@ -31,8 +31,8 @@ public class ProfessionsServiceImpl implements ProfessionsService {
     }
 
     @Override
-    public void createProfession(Profession profession) {
-        professionsRepository.save(profession);
+    public Profession createProfession(Profession profession) {
+        return professionsRepository.save(profession);
     }
 
     @Override

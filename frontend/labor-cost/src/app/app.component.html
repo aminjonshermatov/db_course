@@ -1,14 +1,22 @@
 <mat-tab-group mat-stretch-tabs backgroundColor="primary">
   <mat-tab label="Details">
-    <app-details-tab></app-details-tab>
+    <ng-template matTabContent>
+      <app-details-tab></app-details-tab>
+    </ng-template>
   </mat-tab>
   <mat-tab label="Professions">
-    <app-professions-tab></app-professions-tab>
+    <ng-template matTabContent>
+      <app-professions-tab></app-professions-tab>
+    </ng-template>
   </mat-tab>
   <mat-tab label="Price Guides">
-    <app-price-guides-tab></app-price-guides-tab>
+    <ng-template matTabContent>
+      <app-price-guides-tab></app-price-guides-tab>
+    </ng-template>
   </mat-tab>
   <mat-tab label="Labor Cost Standards">
-    <app-labor-cost-standards-tab></app-labor-cost-standards-tab>
+    <ng-template matTabContent>
+      <app-labor-cost-standards-tab></app-labor-cost-standards-tab>
+    </ng-template>
   </mat-tab>
 </mat-tab-group>

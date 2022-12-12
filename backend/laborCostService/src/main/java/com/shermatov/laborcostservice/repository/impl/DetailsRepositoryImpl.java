@@ -20,13 +20,13 @@ public class DetailsRepositoryImpl implements DetailsRepository {
 
     @Override
     public List<Detail> findAll() {
-        return jdbcTemplate.query("SELECT * FROM details",
+        return jdbcTemplate.query("SELECT * FROM AMINJON.details",
                 BeanPropertyRowMapper.newInstance(Detail.class));
     }
 
     @Override
     public Detail findById(Integer detailId) {
-        return jdbcTemplate.queryForObject("SELECT * FROM details WHERE detail_id=?",
+        return jdbcTemplate.queryForObject("SELECT * FROM AMINJON.details WHERE detail_id=?",
                 BeanPropertyRowMapper.newInstance(Detail.class), detailId);
     }
 
@@ -41,7 +41,7 @@ public class DetailsRepositoryImpl implements DetailsRepository {
 
         Map resultMap = jdbcTemplate.call(connection -> {
 
-            CallableStatement callableStatement = connection.prepareCall("{ CALL INSERT INTO details (\"TYPE\", name, measure_unit, price) VALUES(?,?,?,?) RETURNING detail_id INTO ? }");
+            CallableStatement callableStatement = connection.prepareCall("{ CALL INSERT INTO AMINJON.details (\"TYPE\", name, measure_unit, price) VALUES(?,?,?,?) RETURNING detail_id INTO ? }");
             callableStatement.setString(1, detail.getType().toString());
             callableStatement.setString(2, detail.getName());
             callableStatement.setString(3, detail.getMeasureUnit());
@@ -58,7 +58,7 @@ public class DetailsRepositoryImpl implements DetailsRepository {
 
     @Override
     public void update(Integer detailId, Detail detail) {
-        jdbcTemplate.update("UPDATE details SET type=?, name=?, measure_unit=?, price=? WHERE detail_id=?",
+        jdbcTemplate.update("UPDATE AMINJON.details SET type=?, name=?, measure_unit=?, price=? WHERE detail_id=?",
                 detail.getType().toString(),
                 detail.getName(),
                 detail.getMeasureUnit(),
@@ -68,13 +68,13 @@ public class DetailsRepositoryImpl implements DetailsRepository {
 
     @Override
     public int deleteById(Integer detailId) {
-        return jdbcTemplate.update("DELETE FROM details WHERE detail_id=?",
+        return jdbcTemplate.update("DELETE FROM AMINJON.details WHERE detail_id=?",
                 detailId);
     }
 
     @Override
     public Integer mostExpensiveDetail() {
-        return jdbcTemplate.queryForObject("SELECT furniture_details.most_expensive_detail() FROM dual",
+        return jdbcTemplate.queryForObject("SELECT AMINJON.furniture_details.most_expensive_detail() FROM dual",
                 Integer.class);
     }
 }

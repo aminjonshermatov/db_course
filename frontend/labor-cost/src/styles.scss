@@ -57,3 +57,17 @@ table tr:last-child td /*To remove the last border*/
 .mat-icon-button.mat-success {
   color: #155724;
 }
+
+.container {
+  justify-content: center;
+  align-items: center;
+  display: flex;
+}
+
+mat-form-field {
+  width: 100%;
+}
+
+mat-card-title {
+  text-align: center;
+}

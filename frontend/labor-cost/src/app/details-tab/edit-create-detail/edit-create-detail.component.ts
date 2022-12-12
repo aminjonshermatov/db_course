@@ -2,6 +2,7 @@ import {Component, Inject, OnInit} from '@angular/core';
 import {MAT_DIALOG_DATA, MatDialogRef} from "@angular/material/dialog";
 import {DetailType, IDetail} from "../detail.model";
 import {FormGroup, UntypedFormControl, UntypedFormGroup, Validators} from "@angular/forms";
+import {NotificationService} from "../../notification.service";
 
 @Component({
   selector: 'app-edit-create-detail',
@@ -13,6 +14,7 @@ export class EditCreateDetailComponent implements OnInit {
   public detailForm: FormGroup;
 
   constructor(private readonly dialogRef: MatDialogRef<EditCreateDetailComponent>,
+              private readonly notificationService: NotificationService,
               @Inject(MAT_DIALOG_DATA) public data: { detail: IDetail, isEdit: boolean }) {
     this.detailForm = new UntypedFormGroup({
       name: new UntypedFormControl(this.data.detail.name, [Validators.required]),
@@ -35,6 +37,10 @@ export class EditCreateDetailComponent implements OnInit {
   }
 
   public save(): void {
+    if (!this.detailForm.valid) {
+      this.notificationService.error(`Don't cheat!!!`)
+      return;
+    }
     const isEdit = this.data.isEdit;
     const detailId = this.data.detail.detailId;
     this.data.isEdit = true;

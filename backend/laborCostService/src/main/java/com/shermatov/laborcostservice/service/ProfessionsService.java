@@ -7,7 +7,7 @@ import java.util.List;
 public interface ProfessionsService {
     List<Profession> getProfessions();
     Profession getProfession(Integer professionId);
-    void createProfession(Profession profession);
+    Profession createProfession(Profession profession);
     void updateProfession(Integer professionId, Profession profession);
     void removeProfession(Integer professionId);
 

@@ -174,4 +174,5 @@ FROM labor_cost_standards
 select furniture_details.most_expensive_detail() from dual;
 select * from table( furniture_details.get_operations_with_detail('ЛДСП') );
 
-SELECT * from details;
+SELECT * from AMINJON.DETAILS;
+SELECT * from AMINJON.professions;

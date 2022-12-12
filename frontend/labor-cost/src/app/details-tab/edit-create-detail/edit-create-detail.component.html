@@ -13,7 +13,6 @@
         <mat-form-field appearance="fill">
           <input matInput type="text" placeholder="Detail's name" formControlName="name" id="name">
           <mat-error *ngIf="hasError('name', 'required')">Name is required</mat-error>
-          <mat-error *ngIf="hasError('name', 'min')">You have more than 60 characters</mat-error>
         </mat-form-field>
 
         <mat-form-field appearance="fill">

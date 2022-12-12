@@ -25,10 +25,7 @@ export class DetailsService {
         tap(details => this.detailsSub$.next(details))
       )
       .subscribe({
-        error: err => {
-          this.notificationService.error(NotificationService._getErrorMsg(err));
-          this.detailsSub$.next([]);
-        }
+        error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
       })
   }
 
@@ -38,23 +35,17 @@ export class DetailsService {
         tap(detail => this.selectedDetailSub$.next(detail))
       )
       .subscribe({
-        error: err => {
-          this.notificationService.error(NotificationService._getErrorMsg(err));
-          this.selectedDetailSub$.next(null);
-        }
+        error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
       })
   }
 
-  public createDetail(detail: IDetail): void {
-    this.httpClient.post<IDetail>(`${this.baseUrl}/details`, detail)
+  public createDetail(detailToCreate: IDetail): void {
+    this.httpClient.post<IDetail>(`${this.baseUrl}/details`, detailToCreate)
       .pipe(
         tap(createdDetail => this.detailsSub$.next([...this.detailsSub$.value, createdDetail]))
       )
       .subscribe({
-        error: err => {
-          this.notificationService.error(NotificationService._getErrorMsg(err));
-          this.detailsSub$.next([]);
-        }
+        error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
       })
   }
 
@@ -66,11 +57,7 @@ export class DetailsService {
         ))
       )
       .subscribe({
-        error: err => {
-          console.log(err)
-          this.notificationService.error(NotificationService._getErrorMsg(err));
-          this.detailsSub$.next([]);
-        }
+        error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
       })
   }
 
@@ -80,10 +67,7 @@ export class DetailsService {
         tap(_ => this.detailsSub$.next([...this.detailsSub$.value.filter(detail => detail.detailId != detailId)]))
       )
       .subscribe({
-        error: err => {
-          this.notificationService.error(NotificationService._getErrorMsg(err));
-          this.detailsSub$.next([]);
-        }
+        error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
       })
   }
 
@@ -93,10 +77,7 @@ export class DetailsService {
         tap(cost => this.mostExpensiveDetailSub$.next(cost))
       )
       .subscribe({
-        error: err => {
-          this.notificationService.error(NotificationService._getErrorMsg(err));
-          this.mostExpensiveDetailSub$.next(0);
-        }
+        error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
       })
   }
 

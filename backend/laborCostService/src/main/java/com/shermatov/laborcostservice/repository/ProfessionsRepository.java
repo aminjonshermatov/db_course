@@ -8,7 +8,7 @@ public interface ProfessionsRepository {
 
     List<Profession> findAll();
     Profession findById(Integer professionId);
-    int save(Profession profession);
+    Profession save(Profession profession);
     int update(Integer professionId, Profession profession);
     int deleteById(Integer professionId);
 

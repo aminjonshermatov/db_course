@@ -27,6 +27,7 @@ import {FormsModule, ReactiveFormsModule} from "@angular/forms";
 import {FlexModule} from "@angular/flex-layout";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCardModule} from "@angular/material/card";
+import { EditCreateProfessionComponent } from './professions-tab/edit-create-profession/edit-create-profession.component';
 
 @NgModule({
   declarations: [
@@ -36,7 +37,8 @@ import {MatCardModule} from "@angular/material/card";
     PriceGuidesTabComponent,
     LaborCostStandardsTabComponent,
     DetailTypePipe,
-    EditCreateDetailComponent
+    EditCreateDetailComponent,
+    EditCreateProfessionComponent
   ],
     imports: [
         BrowserModule,

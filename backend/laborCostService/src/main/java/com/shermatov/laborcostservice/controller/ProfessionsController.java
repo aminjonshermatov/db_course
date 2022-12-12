@@ -3,7 +3,6 @@ package com.shermatov.laborcostservice.controller;
 import com.shermatov.laborcostservice.model.Profession;
 import com.shermatov.laborcostservice.service.ProfessionsService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -28,9 +27,8 @@ public class ProfessionsController {
     }
 
     @PostMapping
-    ResponseEntity<String> createProfession(@RequestBody Profession profession) {
-        professionsService.createProfession(profession);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    Profession createProfession(@RequestBody Profession profession) {
+        return professionsService.createProfession(profession);
     }
 
     @PutMapping("/{professionId}")
