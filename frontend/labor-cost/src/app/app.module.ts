@@ -28,6 +28,7 @@ import {FlexModule} from "@angular/flex-layout";
 import {MatSelectModule} from "@angular/material/select";
 import {MatCardModule} from "@angular/material/card";
 import { EditCreateProfessionComponent } from './professions-tab/edit-create-profession/edit-create-profession.component';
+import { EditCreatePriceGuideComponent } from './price-guides-tab/edit-create-price-guide/edit-create-price-guide.component';
 
 @NgModule({
   declarations: [
@@ -38,7 +39,8 @@ import { EditCreateProfessionComponent } from './professions-tab/edit-create-pro
     LaborCostStandardsTabComponent,
     DetailTypePipe,
     EditCreateDetailComponent,
-    EditCreateProfessionComponent
+    EditCreateProfessionComponent,
+    EditCreatePriceGuideComponent
   ],
     imports: [
         BrowserModule,

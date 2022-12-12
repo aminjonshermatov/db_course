@@ -1,0 +1,35 @@
+<p>edit-create-price-guide works!</p>
+<section fxLayout="row wrap" fxLayoutAlign="center center">
+  <mat-card fxFlex="500px" fxFlex.xs="100%">
+    <mat-card-title>{{ data.isEdit ? 'Edit' : 'Create' }} price guide</mat-card-title>
+    <form [formGroup]="priceGuideForm"
+          autocomplete="off"
+          novalidate
+          (ngSubmit)="save()"
+          fxLayout="column wrap"
+          fxLayoutAlign="center center"
+          fxLayoutGap="10px">
+      <mat-card-content>
+
+        <mat-form-field appearance="fill">
+          <input matInput type="number" placeholder="Hourly rate" formControlName="hourlyRate" id="hourlyRate">
+          <mat-error *ngIf="hasError('hourlyRate', 'required')">Hourly rate is required</mat-error>
+          <mat-error *ngIf="hasError('hourlyRate', 'min')">Minimum rate is 0.1</mat-error>
+        </mat-form-field>
+
+      </mat-card-content>
+
+      <mat-card-actions>
+        <button mat-raised-button
+                color="warn"
+                type="button"
+                (click)="onNoClick()">Close</button>
+        <button mat-raised-button
+                color="primary"
+                [disabled]="!priceGuideForm.valid"
+                (click)="save()">{{ data.isEdit ? 'Update' : 'Create' }}</button>
+      </mat-card-actions>
+    </form>
+  </mat-card>
+</section>
+

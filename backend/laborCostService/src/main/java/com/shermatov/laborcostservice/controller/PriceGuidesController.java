@@ -3,7 +3,6 @@ package com.shermatov.laborcostservice.controller;
 import com.shermatov.laborcostservice.model.PriceGuide;
 import com.shermatov.laborcostservice.service.PriceGuidesService;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.http.HttpStatus;
 import org.springframework.http.ResponseEntity;
 import org.springframework.web.bind.annotation.*;
 
@@ -30,9 +29,8 @@ public class PriceGuidesController {
     }
 
     @PostMapping
-    ResponseEntity<String> createPriceGuide(@RequestBody PriceGuide priceGuide) {
-        priceGuidesService.createPriceGuide(priceGuide);
-        return ResponseEntity.status(HttpStatus.CREATED).build();
+    PriceGuide createPriceGuide(@RequestBody PriceGuide priceGuide) {
+        return priceGuidesService.createPriceGuide(priceGuide);
     }
 
     @PutMapping("/{priceGuideId}")

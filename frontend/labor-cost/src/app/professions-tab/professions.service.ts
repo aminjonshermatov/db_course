@@ -51,7 +51,7 @@ export class ProfessionsService {
   public editProfession(professionToUpdate: IProfession): void {
     this.httpClient.put(`${this.baseUrl}/professions/${professionToUpdate.professionId}`, professionToUpdate)
       .pipe(
-        tap(_ => this.professionsSub$.next(
+        tap(() => this.professionsSub$.next(
           [...this.professionsSub$.value.filter(profession => profession.professionId != professionToUpdate.professionId), professionToUpdate]
         ))
       )
@@ -63,7 +63,7 @@ export class ProfessionsService {
   public deleteProfession(professionId: number): void {
     this.httpClient.delete(`${this.baseUrl}/professions/${professionId}`)
       .pipe(
-        tap(_ => this.professionsSub$.next([...this.professionsSub$.value.filter(profession => profession.professionId != professionId)]))
+        tap(() => this.professionsSub$.next([...this.professionsSub$.value.filter(profession => profession.professionId != professionId)]))
       )
       .subscribe({
         error: err => this.notificationService.error(NotificationService._getErrorMsg(err))

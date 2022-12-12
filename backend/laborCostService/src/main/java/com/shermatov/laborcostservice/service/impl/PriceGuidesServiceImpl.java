@@ -31,8 +31,8 @@ public class PriceGuidesServiceImpl implements PriceGuidesService {
     }
 
     @Override
-    public void createPriceGuide(PriceGuide priceGuide) {
-        priceGuidesRepository.save(priceGuide);
+    public PriceGuide createPriceGuide(PriceGuide priceGuide) {
+        return priceGuidesRepository.save(priceGuide);
     }
 
     @Override

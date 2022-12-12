@@ -8,7 +8,7 @@ public interface PriceGuidesRepository {
 
     List<PriceGuide> findAll();
     PriceGuide findById(Integer priceGuideId);
-    int save(PriceGuide priceGuide);
+    PriceGuide save(PriceGuide priceGuide);
     int update(Integer priceGuideId, PriceGuide priceGuide);
     int deleteById(Integer priceGuideId);
 
