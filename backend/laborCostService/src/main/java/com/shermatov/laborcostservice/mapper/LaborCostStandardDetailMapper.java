@@ -1,5 +1,6 @@
-package com.shermatov.laborcostservice.model;
+package com.shermatov.laborcostservice.mapper;
 
+import com.shermatov.laborcostservice.model.LaborCostStandardDetail;
 import org.springframework.jdbc.core.RowMapper;
 
 import java.sql.ResultSet;

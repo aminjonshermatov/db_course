@@ -2,7 +2,7 @@ package com.shermatov.laborcostservice.repository.impl;
 
 import com.shermatov.laborcostservice.model.LaborCostStandard;
 import com.shermatov.laborcostservice.model.LaborCostStandardDetail;
-import com.shermatov.laborcostservice.model.LaborCostStandardDetailMapper;
+import com.shermatov.laborcostservice.mapper.LaborCostStandardDetailMapper;
 import com.shermatov.laborcostservice.model.LaborCostStandardPropagate;
 import com.shermatov.laborcostservice.repository.LaborCostStandardsRepository;
 import org.springframework.beans.factory.annotation.Autowired;

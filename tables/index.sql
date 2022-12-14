@@ -224,7 +224,8 @@ CREATE OR REPLACE PACKAGE tasks AS
                                      profession_name varchar(100)
                                  );
 
-    PROCEDURE get_operation_detailed(req_operation_id IN int, res OUT operation_detailed_t);
+    TYPE operation_detailed_list_t IS TABLE OF operation_detailed_t;
+    FUNCTION get_operation_detailed(req_operation_id int) RETURN operation_detailed_list_t PIPELINED;
 
     -- task_2
     TYPE operation_with_aggregation_t IS record
@@ -236,13 +237,14 @@ CREATE OR REPLACE PACKAGE tasks AS
                                              min_qualification int
                                          );
     TYPE operation_with_aggregation_list_t IS TABLE OF operation_with_aggregation_t;
-    FUNCTION get_operation_with_aggregation RETURN operation_with_aggregation_list_t PIPELINED;
+    FUNCTION get_operations_with_aggregation RETURN operation_with_aggregation_list_t PIPELINED;
 END tasks;
 /
 
 CREATE OR REPLACE PACKAGE BODY tasks AS
     -- task_1
-    PROCEDURE get_operation_detailed(req_operation_id IN int, res OUT operation_detailed_t) AS
+    FUNCTION get_operation_detailed(req_operation_id int) RETURN operation_detailed_list_t PIPELINED IS
+        res operation_detailed_t;
     BEGIN
         SELECT lcs.operation_id,
                lcs.qualification,
@@ -259,10 +261,14 @@ CREATE OR REPLACE PACKAGE BODY tasks AS
                  LEFT JOIN aminjon.professions p
                            ON lcs.profession_id = p.profession_id AND lcs.operation_id = req_operation_id
         WHERE lcs.operation_id = req_operation_id;
+
+        PIPE ROW ( res );
+
+        RETURN;
     END get_operation_detailed;
 
     -- task_2
-    FUNCTION get_operation_with_aggregation RETURN operation_with_aggregation_list_t PIPELINED IS
+    FUNCTION get_operations_with_aggregation RETURN operation_with_aggregation_list_t PIPELINED IS
         res operation_with_aggregation_list_t;
     BEGIN
         SELECT lcs.detail_id,
@@ -280,7 +286,7 @@ CREATE OR REPLACE PACKAGE BODY tasks AS
             END LOOP;
 
         RETURN;
-    END get_operation_with_aggregation;
+    END get_operations_with_aggregation;
 END tasks;
 /
 
@@ -302,14 +308,10 @@ FROM aminjon.labor_cost_standards lcs
          LEFT JOIN professions p ON p.profession_id = lcs.profession_id;
 
 SELECT *
-FROM TABLE ( tasks.get_operation_with_aggregation() );
+FROM TABLE ( tasks.get_operations_with_aggregation() );
 
-DECLARE
-    operation_detailed tasks.operation_detailed_t;
-BEGIN
-    tasks.get_operation_detailed(1, operation_detailed);
-    dbms_output.put_line(operation_detailed.detail_id || ' ' || operation_detailed.detail_name);
-END;
+SELECT *
+FROM TABLE ( tasks.get_operation_detailed(1) );
 
 SELECT furniture_details.most_expensive_detail()
 FROM dual;
