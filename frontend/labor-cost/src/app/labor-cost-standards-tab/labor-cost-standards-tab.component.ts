@@ -60,7 +60,7 @@ export class LaborCostStandardsTabComponent implements OnInit, AfterViewInit {
 
   public readonly laborCostStandardsAsMatTableDataSource$: Observable<MatTableDataSource<ILaborCostStandard | ILaborCostStandardPropagate>> =
     this.withPropagateSub$.pipe(
-      flatMap(withPropagate =>  withPropagate ? this.laborCostStandardsPropagate$ : this.laborCostStandards$),
+      flatMap(withPropagate => withPropagate ? this.laborCostStandardsPropagate$ : this.laborCostStandards$),
       map(laborCostStandards => {
         this.dataSource.data = laborCostStandards;
         return this.dataSource;
