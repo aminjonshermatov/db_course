@@ -31,6 +31,8 @@ import { EditCreateProfessionComponent } from './professions-tab/edit-create-pro
 import { EditCreatePriceGuideComponent } from './price-guides-tab/edit-create-price-guide/edit-create-price-guide.component';
 import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { EditCreateLaborCostStandardComponent } from './labor-cost-standards-tab/edit-create-labor-cost-standard/edit-create-labor-cost-standard.component';
+import { TasksTabComponent } from './tasks-tab/tasks-tab.component';
+import { Task1Component } from './tasks-tab/task1/task1.component';
 
 @NgModule({
   declarations: [
@@ -43,7 +45,9 @@ import { EditCreateLaborCostStandardComponent } from './labor-cost-standards-tab
     EditCreateDetailComponent,
     EditCreateProfessionComponent,
     EditCreatePriceGuideComponent,
-    EditCreateLaborCostStandardComponent
+    EditCreateLaborCostStandardComponent,
+    TasksTabComponent,
+    Task1Component,
   ],
     imports: [
         BrowserModule,

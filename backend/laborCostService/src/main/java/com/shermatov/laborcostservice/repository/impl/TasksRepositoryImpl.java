@@ -18,13 +18,13 @@ public class TasksRepositoryImpl implements TasksRepository {
     JdbcTemplate jdbcTemplate;
     @Override
     public OperationDetailed getOperationDetailed(Integer operationId) {
-        var res = jdbcTemplate.query("SELECT * from TABLE ( tasks.get_operation_detailed(?) )", new OperationDetailedMapper(), operationId);
+        var res = jdbcTemplate.query("SELECT * from TABLE ( aminjon.tasks.get_operation_detailed(?) )", new OperationDetailedMapper(), operationId);
         assert (res.size() == 1);
         return res.get(0);
     }
 
     @Override
     public List<OperationWithAggregation> getOperationsWithAggregation() {
-        return jdbcTemplate.query("SELECT * FROM TABLE ( tasks.get_operations_with_aggregation() )", new OperationWithAggregationMapper());
+        return jdbcTemplate.query("SELECT * FROM TABLE ( aminjon.tasks.get_operations_with_aggregation() )", new OperationWithAggregationMapper());
     }
 }

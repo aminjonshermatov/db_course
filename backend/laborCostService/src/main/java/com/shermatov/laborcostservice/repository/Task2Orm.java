@@ -9,7 +9,7 @@ import org.springframework.stereotype.Repository;
 @Repository
 public interface Task2Orm extends JpaRepository<OperationDetailed, Long> {
 
-    @Query(nativeQuery = true, value = "SELECT * FROM TABLE ( tasks.get_operation_detailed(:req_operation_id) )")
+    @Query(nativeQuery = true, value = "SELECT * FROM TABLE ( aminjon.tasks.get_operation_detailed(:req_operation_id) )")
     OperationDetailed getOperationDetailed(@Param("req_operation_id") Integer operationId);
 
 }
