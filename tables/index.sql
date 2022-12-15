@@ -318,6 +318,38 @@ FROM dual;
 
 SELECT *
 FROM TABLE ( furniture_details.get_operations_with_detail('ЛДСП') );
--- • Задача-3. Все профессии, такие что:
--- для каждого кода работ (из 06)
--- имеется деталь в сборке которой рабочий такой профессии выполняет такую работу.
+
+SELECT *
+FROM AMINJON.labor_cost_standards;
+SELECT *
+FROM AMINJON.professions;
+SELECT *
+FROM AMINJON.price_guide;
+
+/* task_3 using CTE
+WITH price_guides_by_profession_id AS (SELECT profession_id, COUNT(DISTINCT price_guide_id) cnt
+                                       FROM labor_cost_standards
+                                       GROUP BY profession_id),
+     price_guide_cnt AS (SELECT COUNT(*) cnt FROM price_guide)
+SELECT DISTINCT lcs.profession_id
+FROM labor_cost_standards lcs
+         LEFT JOIN price_guides_by_profession_id pg_p ON lcs.profession_id = pg_p.profession_id
+         CROSS JOIN price_guide_cnt pgc
+WHERE pg_p.cnt = pgc.cnt;*/
+
+SELECT *
+FROM professions p
+WHERE (SELECT COUNT(*) FROM price_guide) =
+      (SELECT COUNT(*) FROM labor_cost_standards lcs WHERE lcs.profession_id = p.profession_id GROUP BY price_guide_id);
+
+/*
+- professions           -> p
+- price_guides          -> pg
+- labor_cost_standards  -> lcs
+
+-- relation algebra
+π p.id, p.name (σ ((γ id; count(*)->cnt (pg)).cnt = (γ pg.id; count(*)->cnt (σ (lcs.pid = p.id) (lcs))).cnt) (p))
+
+-- tuple relational calculus
+{ p.id, p.name | ∃p ∈ professions ( ∀pg ∈ price_guides ( ∃lcs ∈ labor_cost_standards ( lcs.profession_id=p.id ^ lcs.price_guide_id=pg.id ) ) ) }
+*/
