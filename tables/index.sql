@@ -303,7 +303,7 @@ SELECT lcs.detail_id,
        oc.cnt operations_cnt,
        mq.mn  min_qualification
 FROM aminjon.labor_cost_standards lcs
-         LEFT JOIN operations_count_tb oc ON oc.profession_id = lcs.operation_id
+         LEFT JOIN operations_count_tb oc ON oc.profession_id = lcs.profession_id
          LEFT JOIN min_qualification_tb mq ON mq.detail_id = lcs.detail_id
          LEFT JOIN professions p ON p.profession_id = lcs.profession_id;
 
