@@ -33,6 +33,7 @@ import {MatSlideToggleModule} from "@angular/material/slide-toggle";
 import { EditCreateLaborCostStandardComponent } from './labor-cost-standards-tab/edit-create-labor-cost-standard/edit-create-labor-cost-standard.component';
 import { TasksTabComponent } from './tasks-tab/tasks-tab.component';
 import { Task1Component } from './tasks-tab/task1/task1.component';
+import { Task2Component } from './tasks-tab/task2/task2.component';
 
 @NgModule({
   declarations: [
@@ -48,6 +49,7 @@ import { Task1Component } from './tasks-tab/task1/task1.component';
     EditCreateLaborCostStandardComponent,
     TasksTabComponent,
     Task1Component,
+    Task2Component,
   ],
     imports: [
         BrowserModule,

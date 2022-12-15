@@ -1,0 +1,22 @@
+<div class="container"  style="width: 90%; padding: 2rem">
+  <table
+    mat-table
+    [dataSource]="(operationsWithAggregationAsMatTableDataSource$ | async) || dataSource"
+    matSort
+    class="mat-elevation-z8"
+    style="width: 95%;">
+
+    <ng-container *ngFor="let col of columns" [matColumnDef]="col.key">
+      <th mat-header-cell
+          *matHeaderCellDef
+          mat-sort-header
+          [sortActionDescription]="'Sort by ' + col.key">
+        <b>{{ col.label }}</b>
+      </th>
+      <td mat-cell *matCellDef="let element"> {{ element[col.key] }} </td>
+    </ng-container>
+
+    <tr mat-header-row *matHeaderRowDef="columnsKey"></tr>
+    <tr mat-row *matRowDef="let row; columns: columnsKey;"></tr>
+  </table>
+</div>
