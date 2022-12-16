@@ -340,7 +340,7 @@ WHERE pg_p.cnt = pgc.cnt;*/
 SELECT *
 FROM professions p
 WHERE (SELECT COUNT(*) FROM price_guide) =
-      (SELECT COUNT(*) FROM labor_cost_standards lcs WHERE lcs.profession_id = p.profession_id GROUP BY price_guide_id);
+      (SELECT COUNT(DISTINCT lcs.price_guide_id) FROM labor_cost_standards lcs WHERE lcs.profession_id = p.profession_id);
 
 /*
 - professions           -> p
