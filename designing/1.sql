@@ -1,12 +1,12 @@
 ALTER SESSION SET CURRENT_SCHEMA = AMINJON;
 
-DROP SEQUENCE products_id_seq;
-DROP TABLE products;
 DROP SEQUENCE shipments_id_seq;
 DROP TABLE shipments;
 DROP SEQUENCE orders_id_seq;
 DROP SEQUENCE contract_id_seq;
 DROP TABLE orders;
+DROP SEQUENCE products_id_seq;
+DROP TABLE products;
 
 CREATE SEQUENCE products_id_seq START WITH 1;
 CREATE TABLE products
