@@ -5,6 +5,7 @@ import {NotificationService} from "../notification.service";
 import {BehaviorSubject, tap} from "rxjs";
 import {IOperationDetailed} from "./OperationDetailed.model";
 import {IOperationWithAggregation} from "./OperationWithAggregation.model";
+import {IProfession} from "../professions-tab/profession.model";
 
 @Injectable({
   providedIn: 'root'
@@ -16,6 +17,7 @@ export class TasksService {
   public readonly operationsDetailedRawSub$: BehaviorSubject<IOperationDetailed[]> = new BehaviorSubject<IOperationDetailed[]>([]);
   public readonly operationsDetailedOrmSub$: BehaviorSubject<IOperationDetailed[]> = new BehaviorSubject<IOperationDetailed[]>([]);
   public readonly operationsWithAggregationSub$: BehaviorSubject<IOperationWithAggregation[]> = new BehaviorSubject<IOperationWithAggregation[]>([]);
+  public readonly task3ProfessionsSub$: BehaviorSubject<IProfession[]> = new BehaviorSubject<IProfession[]>([]);
 
   constructor(private readonly httpClient: HttpClient,
               private readonly notificationService: NotificationService) { }
@@ -48,6 +50,16 @@ export class TasksService {
       .subscribe({
         error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
       });
+  }
+
+  public loadProfessions(): void {
+    this.httpClient.get<IProfession[]>(`${this.baseUrl}/tasks/3`)
+      .pipe(
+        tap(professions => this.task3ProfessionsSub$.next(professions))
+      )
+      .subscribe({
+        error: err => this.notificationService.error(NotificationService._getErrorMsg(err))
+      })
   }
 
 }

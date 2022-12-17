@@ -1,6 +1,7 @@
 package com.shermatov.laborcostservice.controller;
 
 import com.shermatov.laborcostservice.entity.OperationDetailed;
+import com.shermatov.laborcostservice.entity.Profession;
 import com.shermatov.laborcostservice.model.OperationWithAggregation;
 import com.shermatov.laborcostservice.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -31,6 +32,11 @@ public class TasksController {
     @GetMapping("/2")
     List<OperationWithAggregation> getOperationsWithAggregation() {
         return tasksService.getOperationsWithAggregation();
+    }
+
+    @GetMapping("/3")
+    Profession task3() {
+        return this.tasksService.task3();
     }
 
 }

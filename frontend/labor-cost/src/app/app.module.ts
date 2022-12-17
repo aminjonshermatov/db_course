@@ -34,6 +34,7 @@ import { EditCreateLaborCostStandardComponent } from './labor-cost-standards-tab
 import { TasksTabComponent } from './tasks-tab/tasks-tab.component';
 import { Task1Component } from './tasks-tab/task1/task1.component';
 import { Task2Component } from './tasks-tab/task2/task2.component';
+import { Task3Component } from './tasks-tab/task3/task3.component';
 
 @NgModule({
   declarations: [
@@ -50,6 +51,7 @@ import { Task2Component } from './tasks-tab/task2/task2.component';
     TasksTabComponent,
     Task1Component,
     Task2Component,
+    Task3Component,
   ],
     imports: [
         BrowserModule,

@@ -1,8 +1,10 @@
 package com.shermatov.laborcostservice.service.impl;
 
 import com.shermatov.laborcostservice.entity.OperationDetailed;
+import com.shermatov.laborcostservice.entity.Profession;
 import com.shermatov.laborcostservice.model.OperationWithAggregation;
-import com.shermatov.laborcostservice.repository.Task2Orm;
+import com.shermatov.laborcostservice.repository.Task3Orm;
+import com.shermatov.laborcostservice.repository.TaskOrm;
 import com.shermatov.laborcostservice.repository.TasksRepository;
 import com.shermatov.laborcostservice.service.TasksService;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -17,7 +19,10 @@ public class TasksServiceImpl implements TasksService {
     TasksRepository tasksRepository;
 
     @Autowired
-    Task2Orm task2Orm;
+    TaskOrm task2Orm;
+
+    @Autowired
+    Task3Orm task3Orm;
 
     @Override
     public OperationDetailed getOperationDetailed(Integer operationId, Boolean isRawSql) {
@@ -30,4 +35,11 @@ public class TasksServiceImpl implements TasksService {
     public List<OperationWithAggregation> getOperationsWithAggregation() {
         return tasksRepository.getOperationsWithAggregation();
     }
+
+    @Override
+    public Profession task3() {
+        return task3Orm.task3();
+    }
+
+
 }

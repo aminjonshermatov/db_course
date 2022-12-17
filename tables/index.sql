@@ -326,7 +326,6 @@ FROM AMINJON.professions;
 SELECT *
 FROM AMINJON.price_guide;
 
-/* task_3 using CTE
 WITH price_guides_by_profession_id AS (SELECT profession_id, COUNT(DISTINCT price_guide_id) cnt
                                        FROM labor_cost_standards
                                        GROUP BY profession_id),
@@ -335,7 +334,7 @@ SELECT DISTINCT lcs.profession_id
 FROM labor_cost_standards lcs
          LEFT JOIN price_guides_by_profession_id pg_p ON lcs.profession_id = pg_p.profession_id
          CROSS JOIN price_guide_cnt pgc
-WHERE pg_p.cnt = pgc.cnt;*/
+WHERE pg_p.cnt = pgc.cnt;
 
 SELECT *
 FROM professions p
@@ -349,6 +348,7 @@ WHERE (SELECT COUNT(*) FROM price_guide) =
 
 -- relation algebra
 π p.id, p.name (σ ((γ id; count(*)->cnt (pg)).cnt = (γ pg.id; count(*)->cnt (σ (lcs.pid = p.id) (lcs))).cnt) (p))
+π p.id, p.name ( p ÷ (pg X{pg.price_guide_id = pg.id} lcs) )
 
 -- tuple relational calculus
 { p.id, p.name | ∃p ∈ professions ( ∀pg ∈ price_guides ( ∃lcs ∈ labor_cost_standards ( lcs.profession_id=p.id ^ lcs.price_guide_id=pg.id ) ) ) }
