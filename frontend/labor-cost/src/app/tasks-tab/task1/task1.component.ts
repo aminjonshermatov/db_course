@@ -1,5 +1,16 @@
 import {AfterViewInit, Component, OnInit, ViewChild} from '@angular/core';
-import {BehaviorSubject, catchError, combineLatest, map, Observable, of, tap} from "rxjs";
+import {
+  BehaviorSubject,
+  catchError,
+  combineLatest,
+  debounce,
+  debounceTime,
+  distinctUntilChanged,
+  map,
+  Observable,
+  of,
+  tap
+} from "rxjs";
 import {MatSort} from "@angular/material/sort";
 import {MatTableDataSource} from "@angular/material/table";
 import {IOperationDetailed} from "../OperationDetailed.model";
@@ -42,6 +53,8 @@ export class Task1Component implements OnInit, AfterViewInit {
       this.operationId$
     )
     .pipe(
+      debounceTime(150),
+      distinctUntilChanged(),
       tap(([isUseOrm, operationId]) => isUseOrm ? this.tasksService.loadOperationsDetailedOrm(operationId) : this.tasksService.loadOperationsDetailedRaw(operationId)),
       map(([isUseOrm, _]) => isUseOrm ? this.tasksService.operationsDetailedOrmSub$ : this.tasksService.operationsDetailedRawSub$),
       map(data$ => {
