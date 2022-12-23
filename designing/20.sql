@@ -52,6 +52,6 @@ CREATE TABLE purchases
     drug_id    INT NOT NULL,
     quantity   INT NOT NULL CHECK ( quantity > 0 ),
 
-    CONSTRAINT request_id_fk FOREIGN KEY (request_id) REFERENCES requests (id) ON DELETE SET NULL
+    CONSTRAINT request_id_fk FOREIGN KEY (request_id) REFERENCES requests (id) ON DELETE SET NULL,
     CONSTRAINT drug_id_fk FOREIGN KEY (drug_id) REFERENCES drugs (id) ON DELETE SET NULL
 );
